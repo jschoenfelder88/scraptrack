@@ -1,0 +1,53 @@
+﻿@model ScrapTrack.Data.Models.Item
+
+@{
+    ViewBag.Title = "Item Details";
+}
+
+<div>
+    <div class="container page-title">
+        <div class="col-6">
+            <h1>@Model.ItemName</h1>
+        </div>
+        <div class="col-6">
+            <ul class="nav justify-content-end">
+                <li>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-secondary" })
+                </li>
+                <li>
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-danger" })
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemWeight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemWeight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemType)
+        </dd>
+    </dl>
+</div>
+<p>
+
+    @Html.ActionLink("Back to List", "Index", "Item", new { @class = "btn btn-primary" })
+</p>

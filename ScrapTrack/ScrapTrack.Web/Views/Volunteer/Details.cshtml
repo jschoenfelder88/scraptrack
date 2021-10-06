@@ -1,0 +1,45 @@
+﻿@model ScrapTrack.Data.Models.Volunteer
+
+@{
+    ViewBag.Title = "Volunteer Info";
+}
+
+<div>
+    <div class="container page-title">
+        <div class="col-6">
+            <h1>@Model.FirstName @Model.LastName</h1>
+        </div>
+        <div class="col-6">
+            <ul class="nav justify-content-end">
+                <li>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-secondary" })
+                </li>
+                <li>
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-danger" })
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", "Volunteer", new { @class = "btn btn-primary" })
+</p>
