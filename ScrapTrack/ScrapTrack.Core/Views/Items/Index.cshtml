@@ -1,13 +1,11 @@
-﻿@model IEnumerable<ScrapTrack.Data.Models.Volunteer>
+﻿@model IEnumerable<ScrapTrack.Data.Models.Item>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <div class="container">
-    <h1>Volunteers</h1>
+    <h1>Items</h1>
     <div class="row">
         <div class="col-7">
             <div class="dt-vertical-scroll">
@@ -16,7 +14,13 @@
                         <tr>
                             <th class="table-checkbox-column"></th>
                             <th>
-                                Full Name
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Category)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Weight)
                             </th>
                         </tr>
                     </thead>
@@ -28,10 +32,13 @@
                                     <input type="checkbox" />
                                 </td>
                                 <td>
-                                    <a asp-action="Details" asp-route-id="@item.Id">
-                                        @Html.DisplayFor(modelItem => item.FirstName)
-                                        @Html.DisplayFor(modelItem => item.LastName)
-                                    </a>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Category.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Weight)
                                 </td>
                             </tr>
                         }

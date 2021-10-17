@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,7 @@ namespace ScrapTrack.Data.Models
         [Column(TypeName = "decimal(6, 2)")]
         public decimal Weight { get; set; }
         [Required]
+        [HiddenInput(DisplayValue = false)]
         public bool TempItem { get; set; } = false;
         [ForeignKey("ItemFK")]
         public ICollection<Transaction> Transactions { get; set; }

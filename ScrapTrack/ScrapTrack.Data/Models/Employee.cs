@@ -11,9 +11,11 @@ namespace ScrapTrack.Data.Models
         public int Id { get; set; }
         [Required]
         [MaxLength(50)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Required]
         [MaxLength(50)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Required]
         [MaxLength(50)]
