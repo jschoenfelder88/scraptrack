@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ScrapTrack.Data.DataAcess
+namespace ScrapTrack.Data.DataAccess
 {
     public class scrapskcContext : DbContext
     {
