@@ -1,21 +1,29 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ScrapTrack.Data.Models
 {
     public class Item
     {
-        public int ID { get; set; }
-        [Required, Display(Name = "Item Name")]
-        public string ItemName { get; set; }
-        [Required, Display(Name = "Weight (oz)")]
-        public double ItemWeight { get; set; }
-        [Required, Display(Name = "Type")]
-        public ItemCategoryType ItemType { get; set; }
-
+        public int Id { get; set; }
+        [Required]
+        [MaxLength(140)]
+        public string Description { get; set; }
+        public Category Category { get; set; }
+        public int CategoryFK { get; set; }
+        [Required]
+        [RegularExpression(@"^\d+(\.\d{1,2})?$")]
+        [Range(0, 9999.99)]
+        [Column(TypeName = "decimal(6, 2)")]
+        public decimal Weight { get; set; }
+        [Required]
+        [HiddenInput(DisplayValue = false)]
+        public bool TempItem { get; set; } = false;
+        [ForeignKey("ItemFK")]
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

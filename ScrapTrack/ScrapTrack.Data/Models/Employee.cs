@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ScrapTrack.Data.Models
 {
-    public class Volunteer
+    public class Employee
     {
         public int Id { get; set; }
         [Required]
@@ -17,7 +17,11 @@ namespace ScrapTrack.Data.Models
         [MaxLength(50)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [ForeignKey("VolunteerFK")]
+        [Required]
+        [MaxLength(50)]
+        [Column(TypeName = "varchar(50)")]
+        public string Username { get; set; }
+        [ForeignKey("EmployeeFK")]
         public ICollection<Transaction> Transactions { get; set; }
     }
 }
