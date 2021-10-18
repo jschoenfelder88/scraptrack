@@ -11,9 +11,9 @@ function search() {
     table = document.getElementById("activeTable");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
+        td = tr[i].getElementsByTagName("a")[0];
         if (td) {
-            txtValue = td.textContent || td.innerText;
+            txtValue = td.innerText;
             if (txtValue.toUpperCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
             } else {
