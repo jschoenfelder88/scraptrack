@@ -8,10 +8,15 @@
 
 <div class="container">
     <h1>Volunteers</h1>
+    <!--    
+    Search Bar     
+    -->
+    <input type="text" id="myInput" onkeyup="search()" placeholder="Search.." title="Type in a search term">
+
     <div class="row">
         <div class="col-7">
             <div class="dt-vertical-scroll">
-                <table class="table">
+                <table class="table" id="activeTable">
                     <thead>
                         <tr>
                             <th class="table-checkbox-column"></th>
