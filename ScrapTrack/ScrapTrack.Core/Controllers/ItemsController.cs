@@ -48,7 +48,7 @@ namespace ScrapTrack.Core.Controllers
         // GET: Items/Create
         public IActionResult Create()
         {
-            ViewData["CategoryFK"] = new SelectList(_context.Categories, "Id", "Description");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace ScrapTrack.Core.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,CategoryFK,Weight,TempItem")] Item item)
+        public async Task<IActionResult> Create([Bind("Id,Description,CategoryId,Weight,TempItem")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace ScrapTrack.Core.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryFK"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryFK);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryId);
             return View(item);
         }
 
@@ -82,7 +82,7 @@ namespace ScrapTrack.Core.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryFK"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryFK);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryId);
             return View(item);
         }
 
@@ -91,7 +91,7 @@ namespace ScrapTrack.Core.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,CategoryFK,Weight,TempItem")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,CategoryId,Weight,TempItem")] Item item)
         {
             if (id != item.Id)
             {
@@ -118,7 +118,7 @@ namespace ScrapTrack.Core.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryFK"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryFK);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryId);
             return View(item);
         }
 

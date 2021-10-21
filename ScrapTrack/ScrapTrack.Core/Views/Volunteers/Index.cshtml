@@ -8,13 +8,9 @@
 
 <div class="container">
     <h1>Volunteers</h1>
-    <!--    
-    Search Bar     
-    -->
-    <input type="text" id="myInput" onkeyup="search()" placeholder="Search.." title="Type in a search term">
-
     <div class="row">
-        <div class="col-7">
+        <div class="col-8">
+            <input class="form-control search-box" type="text" id="myInput" onkeyup="search()" placeholder="Search" title="Type in a search term">
             <div class="dt-vertical-scroll">
                 <table class="table" id="activeTable">
                     <thead>
@@ -44,7 +40,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-5">
+        <div class="col-4">
             <h3>Actions</h3>
             <p>
                 <a asp-action="Create">Create New</a>

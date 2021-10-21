@@ -106,3 +106,22 @@ body {
     text-align: center;
     width: 50px;
 }
+
+.table tbody tr:hover {
+    background-color: #E8E9E9;
+}
+
+.table tbody td a {
+    color: #14A1D0;
+    font-weight: 700;
+}
+
+/* Other styles
+-------------------------------------------------- */
+.search-box {
+    width: 15rem;
+}
+
+h1 {
+    margin: 2rem 0;
+}
