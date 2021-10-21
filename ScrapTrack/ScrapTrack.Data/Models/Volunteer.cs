@@ -17,7 +17,6 @@ namespace ScrapTrack.Data.Models
         [MaxLength(50)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [ForeignKey("VolunteerFK")]
         public ICollection<Transaction> Transactions { get; set; }
     }
 }

@@ -21,7 +21,6 @@ namespace ScrapTrack.Data.Models
         [MaxLength(50)]
         [Column(TypeName = "varchar(50)")]
         public string Username { get; set; }
-        [ForeignKey("EmployeeFK")]
         public ICollection<Transaction> Transactions { get; set; }
     }
 }
