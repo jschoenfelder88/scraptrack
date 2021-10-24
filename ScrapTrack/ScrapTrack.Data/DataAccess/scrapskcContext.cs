@@ -14,5 +14,26 @@ namespace ScrapTrack.Data.DataAccess
         public DbSet<Item> Items{ get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                new Category
+                {
+                    Id = 1,
+                    Description = "Clothing"
+                },
+                new Category
+                {
+                    Id = 2,
+                    Description = "Survival"
+                },
+                new Category
+                {
+                    Id = 3,
+                    Description = "Food"
+                }
+            );
+        }
     }
 }

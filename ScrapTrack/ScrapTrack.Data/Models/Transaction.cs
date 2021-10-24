@@ -10,12 +10,12 @@ namespace ScrapTrack.Data.Models
         public int Id { get; set; }
         [Required]
         public DateTime Date { get; set; }
+        public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
-        public int EmployeeFK { get; set; }
+        public int VolunteerId { get; set; }
         public Volunteer Volunteer { get; set; }
-        public int VolunteerFK { get; set; }
+        public int ItemId { get; set; }
         public Item Item { get; set; }
-        public int ItemFK { get; set; }
         [Required]
         public int Quantity { get; set; }
 

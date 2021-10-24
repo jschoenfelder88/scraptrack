@@ -13,17 +13,13 @@ namespace ScrapTrack.Data.Models
         [Required]
         [MaxLength(140)]
         public string Description { get; set; }
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public int CategoryFK { get; set; }
-        [Required]
-        [RegularExpression(@"^\d+(\.\d{1,2})?$")]
-        [Range(0, 9999.99)]
-        [Column(TypeName = "decimal(6, 2)")]
+        [Range(0, 99.9)]
+        [Column(TypeName = "decimal(3, 1)")]
+        [Display(Name = "Weight (lbs)")]
+        [DisplayFormat(DataFormatString = "{0:0.#}")]
         public decimal Weight { get; set; }
-        [Required]
-        [HiddenInput(DisplayValue = false)]
-        public bool TempItem { get; set; } = false;
-        [ForeignKey("ItemFK")]
         public ICollection<Transaction> Transactions { get; set; }
     }
 }

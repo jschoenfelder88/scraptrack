@@ -12,7 +12,6 @@ namespace ScrapTrack.Data.Models
         [Required]
         [MaxLength(20)]
         public string Description { get; set; }
-        [ForeignKey("CategoryFK")]
         public ICollection<Item> Items { get; set; }
     }
 }
