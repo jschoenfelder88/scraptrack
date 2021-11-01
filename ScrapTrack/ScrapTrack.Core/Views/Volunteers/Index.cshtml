@@ -17,7 +17,10 @@
                         <tr>
                             <th class="table-checkbox-column"></th>
                             <th>
-                                Full Name
+                                First Name
+                            </th>
+                            <th>
+                                Last Name
                             </th>
                         </tr>
                     </thead>
@@ -30,7 +33,11 @@
                                 </td>
                                 <td>
                                     <a asp-action="Details" asp-route-id="@item.Id">
-                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                        @Html.DisplayFor(modelItem => item.FirstName)                                    
+                                    </a>
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id">
                                         @Html.DisplayFor(modelItem => item.LastName)
                                     </a>
                                 </td>
@@ -45,10 +52,7 @@
             <p>
                 <a asp-action="Create">Create New</a>
             </p>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec vehicula lectus. Quisque elementum nec felis ac varius. Pellentesque non pretium lorem, vestibulum mollis risus. Nam quis venenatis metus. Ut in blandit risus. Duis ultricies lacinia quam eu ullamcorper. Vestibulum nec elit nec libero cursus maximus et imperdiet metus. Aliquam tristique dictum velit, eu egestas ipsum luctus a. Maecenas maximus neque porta ante dictum, sed laoreet mauris luctus. Donec nisi nisl, iaculis et lorem sed, iaculis eleifend sem. Etiam ut feugiat nunc. Proin id eros suscipit, tincidunt massa laoreet, aliquam augue. Nulla cursus nisl at dolor porta, sit amet venenatis tellus sodales. Integer gravida leo augue, vel efficitur diam gravida a. Nunc risus tellus, dapibus vitae lacus sit amet, mattis sodales nibh. Maecenas sit amet tempus ligula.
-                Aenean varius interdum vestibulum. Sed commodo ac justo vitae efficitur. Nullam facilisis nibh sed ipsum porta, nec sollicitudin mauris maximus. Nulla semper lorem lorem. Proin efficitur orci lacus, et volutpat augue sodales vel. Aliquam erat volutpat. In vulputate efficitur porttitor. Nulla pretium interdum sapien, quis pulvinar dui ultricies vitae. Nullam nulla justo, malesuada ut tempor a, laoreet ut elit. Donec vestibulum cursus metus sit amet lobortis. Quisque eu auctor eros. Suspendisse id mauris eu ligula semper aliquet. Etiam dolor mauris, posuere non vehicula eget, porttitor sit amet orci.
-            </p>
+            <p>Click the volunteer's name to edit their details!</p>
         </div>
     </div>
 </div>
