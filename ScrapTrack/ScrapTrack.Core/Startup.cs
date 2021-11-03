@@ -29,6 +29,10 @@ namespace ScrapTrack.Core
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+            services.AddDbContext<identityContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("Default"));
+            });
             services.AddControllersWithViews();
         }
 
