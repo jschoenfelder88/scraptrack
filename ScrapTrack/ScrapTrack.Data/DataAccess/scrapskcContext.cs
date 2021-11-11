@@ -8,7 +8,7 @@ namespace ScrapTrack.Data.DataAccess
 {
     public class scrapskcContext : DbContext
     {
-        public scrapskcContext(DbContextOptions options) : base(options) { }
+        public scrapskcContext(DbContextOptions<scrapskcContext> options) : base(options) { }
         public DbSet<Volunteer> Volunteers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items{ get; set; }
