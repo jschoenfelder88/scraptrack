@@ -6,9 +6,9 @@ using System.Text;
 
 namespace ScrapTrack.Data.DataAccess
 {
-    public class ScrapTrackDBContext : DbContext
+    public class AppDataDbContext : DbContext
     {
-        public ScrapTrackDBContext(DbContextOptions<ScrapTrackDBContext> options) : base(options) { }
+        public AppDataDbContext(DbContextOptions<AppDataDbContext> options) : base(options) { }
         public DbSet<Volunteer> Volunteers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items{ get; set; }

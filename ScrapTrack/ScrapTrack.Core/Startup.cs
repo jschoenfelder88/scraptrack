@@ -25,11 +25,11 @@ namespace ScrapTrack.Core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ScrapTrackDBContext>(options =>
+            services.AddDbContext<AppDataDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
-            services.AddDbContext<IdentityDBContext>(options =>
+            services.AddDbContext<AuthorizationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
