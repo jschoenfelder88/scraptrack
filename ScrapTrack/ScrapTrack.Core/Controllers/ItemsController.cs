@@ -12,9 +12,9 @@ namespace ScrapTrack.Core.Controllers
 {
     public class ItemsController : Controller
     {
-        private readonly scrapskcContext _context;
+        private readonly ScrapTrackDBContext _context;
 
-        public ItemsController(scrapskcContext context)
+        public ItemsController(ScrapTrackDBContext context)
         {
             _context = context;
         }

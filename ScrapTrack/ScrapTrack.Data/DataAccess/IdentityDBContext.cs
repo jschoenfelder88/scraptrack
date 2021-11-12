@@ -7,9 +7,9 @@ using System.Text;
 
 namespace ScrapTrack.Data.DataAccess
 {
-    public class identityContext : IdentityDbContext<AppUser>
+    public class IdentityDBContext : IdentityDbContext<ApplicationUser>
     {
-        public identityContext(DbContextOptions<identityContext> options)
+        public IdentityDBContext(DbContextOptions<IdentityDBContext> options)
         : base(options)
         {
         }

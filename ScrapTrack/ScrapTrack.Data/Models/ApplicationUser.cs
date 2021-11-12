@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ScrapTrack.Data.Models
 {
-    public class AppUser : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
     }
 }
