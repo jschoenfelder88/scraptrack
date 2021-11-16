@@ -1,29 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-
-function search() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("activeTable");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-            txtValue = td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-
-// Sorting
+﻿// Table Sorting
 // Get Value of the Rows
 const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
 
@@ -41,3 +16,27 @@ document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() =
         .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
         .forEach(tr => tbody.appendChild(tr));
 })));
+
+
+/* Modal Activation */
+$(document).ready(function () {
+    var btns = $(".mmodal-btn");
+    var modal = $(".mmodal");
+    var close = document.getElementsByClassName("close")[0];
+
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('click', function () {
+            modal[0].style.display = "block";
+        });
+    }
+
+    close.addEventListener("click", function () {
+        modal[0].style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+        if (event.target == modal[0]) {
+            modal[0].style.display = "none";
+        }
+    });
+});
