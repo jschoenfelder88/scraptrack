@@ -23,3 +23,4 @@ namespace ScrapTrack.Data.Models
         public ICollection<Transaction> Transactions { get; set; }
     }
 }
+    
