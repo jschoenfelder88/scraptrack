@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ScrapTrack.Data.Models.Volunteer>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h1>Volunteers</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <input class="form-control search-box" type="text" id="volunteerNameInput" onkeyup="searchVolunteers()"placeholder="Search" title="Type in a search term">
+                </div>
+                <div class="col-md-6">
+                    <btn id="btnAddVolunteer" class="btn btn-primary mmodal-btn">Add Volunteer</btn>
+                </div>
+            </div>
+            <div class="dt-vertical-scroll">
+                <table class="table" id="volunteerTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                First Name
+                            </th>
+                            <th>
+                                Last Name
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id">
+                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                    </a>
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id">
+                                        @Html.DisplayFor(modelItem => item.LastName)
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+<script>
+    function searchVolunteers() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("volunteerNameInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("volunteerTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 1; i < tr.length; i++) {
+            firstName = tr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
+            lastName = tr[i].getElementsByTagName("td")[1].innerText.toUpperCase();
+            fullName = firstName + ' ' + lastName;
+
+            if (fullName !== undefined) {
+                if (fullName.indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>
