@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ScrapTrack.Core.Models;
+using ScrapTrack.Data.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,23 +13,29 @@ using System.Threading.Tasks;
 
 namespace ScrapTrack.Core.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly AppDataDbContext _context;
+        public HomeController(ILogger<HomeController> logger, AppDataDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
+            
+            var dashboardModel = new DashboardViewModel()
+            {
+                ItemList = _context.Items.Include(a => a.Category).ToList(),
+                VolunteerList = _context.Volunteers.ToList(),
+                CategoryId = new SelectList(_context.Categories, "Id", "Description")
+        };
 
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(dashboardModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

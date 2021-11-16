@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ScrapTrack.Data.Models;
 
 namespace ScrapTrack.Core.Controllers
 {
+    [Authorize]
     public class VolunteersController : Controller
     {
         private readonly AppDataDbContext _context;
@@ -22,7 +24,7 @@ namespace ScrapTrack.Core.Controllers
         // GET: Volunteers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Volunteers.ToListAsync());
+            return View("~/Views/Volunteers/_ListVolunteers.cshtml", await _context.Volunteers.ToListAsync());
         }
 
         // GET: Volunteers/Details/5
@@ -46,7 +48,7 @@ namespace ScrapTrack.Core.Controllers
         // GET: Volunteers/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView("~/Views/Volunteers/_CreateVolunteer.cshtml");
         }
 
         // POST: Volunteers/Create
@@ -60,7 +62,7 @@ namespace ScrapTrack.Core.Controllers
             {
                 _context.Add(volunteer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return PartialView("~/Views/Shared/_Success.cshtml");
             }
             return View(volunteer);
         }

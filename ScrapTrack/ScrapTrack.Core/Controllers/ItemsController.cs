@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using ScrapTrack.Data.Models;
 
 namespace ScrapTrack.Core.Controllers
 {
+    [Authorize]
     public class ItemsController : Controller
     {
         private readonly AppDataDbContext _context;
@@ -23,7 +25,7 @@ namespace ScrapTrack.Core.Controllers
         public async Task<IActionResult> Index()
         {
             var scrapskcContext = _context.Items.Include(i => i.Category);
-            return View(await scrapskcContext.ToListAsync());
+            return PartialView(await scrapskcContext.ToListAsync());
         }
 
         // GET: Items/Details/5
@@ -49,7 +51,7 @@ namespace ScrapTrack.Core.Controllers
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description");
-            return View();
+            return PartialView("~/Views/Items/_CreateItem.cshtml");
         }
 
         // POST: Items/Create
@@ -63,10 +65,10 @@ namespace ScrapTrack.Core.Controllers
             {
                 _context.Add(item);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return PartialView("~/Views/Shared/_Success.cshtml");
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryId);
-            return View(item);
+            return PartialView("~/Views/Items/_CreateItem.cshtml",item);
         }
 
         // GET: Items/Edit/5
