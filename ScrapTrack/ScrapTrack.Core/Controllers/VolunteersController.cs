@@ -24,7 +24,7 @@ namespace ScrapTrack.Core.Controllers
         // GET: Volunteers
         public async Task<IActionResult> Index()
         {
-            return View("~/Views/Volunteers/_ListVolunteers.cshtml", await _context.Volunteers.ToListAsync());
+            return PartialView("~/Views/Volunteers/_ListVolunteers.cshtml", await _context.Volunteers.ToListAsync());
         }
 
         // GET: Volunteers/Details/5

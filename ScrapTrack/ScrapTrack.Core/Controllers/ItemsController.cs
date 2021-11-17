@@ -25,7 +25,7 @@ namespace ScrapTrack.Core.Controllers
         public async Task<IActionResult> Index()
         {
             var scrapskcContext = _context.Items.Include(i => i.Category);
-            return PartialView(await scrapskcContext.ToListAsync());
+            return PartialView("~/Views/Items/_ListItems.cshtml", await scrapskcContext.ToListAsync());
         }
 
         // GET: Items/Details/5
