@@ -32,6 +32,11 @@ namespace ScrapTrack.Data.DataAccess
                 {
                     Id = 3,
                     Description = "Food"
+                },
+                new Category
+                {
+                    Id = 4,
+                    Description = "none"
                 }
             );
         }
