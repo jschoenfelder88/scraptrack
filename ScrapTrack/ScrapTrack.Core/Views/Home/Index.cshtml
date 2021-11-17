@@ -58,15 +58,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <h3>Welcome, @User.Identity.Name!</h3>
+            <h3>Dashboard</h3>
             <hr />
             <h4>Quick Actions</h4>
             <div class="container quickaction">
                 <div class="row">
-                    <btn id="btnAddVolunteer" class="btn btn-success mmodal-btn quickaction-link">Add Volunteer</btn>
+                    <btn class="btn btn-success mmodal-btn quickaction-link btnAddVolunteer">Add Volunteer</btn>
                 </div>
                 <div class="row">
-                    <btn id="btnAddItem" class="btn btn-success mmodal-btn quickaction-link">Add Item</btn>
+                    <btn class="btn btn-success mmodal-btn quickaction-link btnAddItem">Add Item</btn>
                 </div>
             </div>
         </div>
@@ -79,11 +79,51 @@
             <div class="tabcontent-container">
                 <div id="transactions" class="tabcontent active">
                 </div>
+
                 <div id="volunteers" class="tabcontent">
-                    @Html.Partial("~/Views/Volunteers/_ListVolunteers.cshtml", Model.VolunteerList)
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <h1>Volunteers</h1>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input class="form-control search-box" type="text" id="volunteerNameInput" onkeyup="searchVolunteers()" placeholder="Search" title="Type in a search term">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <btn class="btn btn-primary mmodal-btn btnAddVolunteer">Add Volunteer</btn>
+                                    </div>
+                                </div>
+                                <div id="partial-volunteer-list">
+                                    @Html.Partial("~/Views/Volunteers/_ListVolunteers.cshtml", Model.VolunteerList)
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div id="items" class="tabcontent">
-                    @Html.Partial("~/Views/Items/_ListItems.cshtml", Model.ItemList)
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <h1>Items</h1>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input class="form-control search-box" type="text" id="descriptionInput" onkeyup="searchItems()" placeholder="Search" title="Type in a search term">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <btn class="btn btn-primary mmodal-btn btnAddItem">Add Item</btn>
+                                    </div>
+                                </div>
+                                <div id="partial-item-list">
+                                    @Html.Partial("~/Views/Items/_ListItems.cshtml", Model.ItemList)
+                                </div>
+                               
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,6 +172,14 @@
                 success: function (result) {
                     console.log(result);
                     $("#partial-content").html(result);
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("Index", "Volunteers")',
+                        success: function (listResult) {
+                            $("#partial-volunteer-list").html(listResult);
+                        }
+                    })
                 },
                 error: function (result) {
                     console.log(result);
@@ -147,6 +195,14 @@
                 data: $('form').serialize(),
                 success: function (result) {
                     $("#partial-content").html(result);
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("Index", "Items")',
+                        success: function (listResult) {
+                            $("#partial-item-list").html(listResult);
+                        }
+                    });
                 },
                 error: function (result) {
                     console.log(result);
@@ -154,7 +210,7 @@
             });
         });
 
-        $('#btnAddVolunteer').on('click', function (e) {
+        $('.btnAddVolunteer').on('click', function (e) {
             e.preventDefault();
             $.ajax({
                 type: 'GET',
@@ -165,7 +221,7 @@
             });
         });
 
-        $('#btnAddItem').on('click', function (e) {
+        $('.btnAddItem').on('click', function (e) {
             e.preventDefault();
             $.ajax({
                 type: 'GET',

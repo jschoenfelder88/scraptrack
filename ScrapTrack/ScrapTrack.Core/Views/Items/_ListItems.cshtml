@@ -1,57 +1,42 @@
 ﻿@model IEnumerable<ScrapTrack.Data.Models.Item>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <h1>Items</h1>
-            <div class="row">
-                <div class="col-md-6">
-                    <input class="form-control search-box" type="text" id="descriptionInput" onkeyup="searchItems()" placeholder="Search" title="Type in a search term">
-                </div>
-                <div class="col-md-6">
-                    <btn id="btnAddItem" class="btn btn-primary mmodal-btn ">Add Item</btn>
-                </div>
-            </div>
-            <div class="dt-vertical-scroll">
-                <table class="table" id="itemTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Description)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Category)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Weight)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Id">
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </a>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Category.Description)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Weight)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
+
+<div class="dt-vertical-scroll">
+    <table class="table" id="itemTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Weight)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
 
 <script>
     function searchItems() {
