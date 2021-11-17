@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScrapTrack.Core.Models;
 using ScrapTrack.Core.Repository;
 using System;
@@ -16,12 +17,14 @@ namespace ScrapTrack.Core.Controllers
             _accountRepository = accountRepository;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Register()
         {
             return PartialView("~/Views/Account/_Register.cshtml");
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterUserViewModel userModel)
         {
@@ -65,6 +68,7 @@ namespace ScrapTrack.Core.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _accountRepository.SignOUtAsync();
