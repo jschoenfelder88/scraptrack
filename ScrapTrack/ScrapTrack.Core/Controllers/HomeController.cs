@@ -30,6 +30,7 @@ namespace ScrapTrack.Core.Controllers
             
             var dashboardModel = new DashboardViewModel()
             {
+                TransactionList = _context.Transactions.ToList(),
                 ItemList = _context.Items.Include(a => a.Category).ToList(),
                 VolunteerList = _context.Volunteers.ToList(),
                 CategoryId = new SelectList(_context.Categories, "Id", "Description")

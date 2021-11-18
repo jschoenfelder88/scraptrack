@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace ScrapTrack.Data.Models
@@ -10,6 +11,7 @@ namespace ScrapTrack.Data.Models
         public int Id { get; set; }
         [Required]
         public DateTime Date { get; set; }
+        [ForeignKey("User_ID")]
         public virtual ApplicationUser ApplicationUser { get; set; }
         public int VolunteerId { get; set; }
         public Volunteer Volunteer { get; set; }

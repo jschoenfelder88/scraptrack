@@ -23,7 +23,7 @@ namespace ScrapTrack.Core.Controllers
         public async Task<IActionResult> Index()
         {
             var appDataDbContext = _context.Transactions.Include(t => t.Item).Include(t => t.Volunteer);
-            return View(await appDataDbContext.ToListAsync());
+            return PartialView("~/Views/Transactions/_ListTransaction.cshtml", await appDataDbContext.ToListAsync());
         }
 
         // GET: Transactions/Details/5
@@ -51,7 +51,7 @@ namespace ScrapTrack.Core.Controllers
         {
             ViewData["ItemId"] = new SelectList(_context.Items, "Id", "Description");
             ViewData["VolunteerId"] = new SelectList(_context.Volunteers, "Id", "FirstName");
-            return View();
+            return PartialView("~/Views/Transactions/_CreateTransaction.cshtml");
         }
 
         // POST: Transactions/Create
@@ -65,11 +65,11 @@ namespace ScrapTrack.Core.Controllers
             {
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return PartialView("~/Views/Shared/_Success.cshtml");
             }
             ViewData["ItemId"] = new SelectList(_context.Items, "Id", "Description", transaction.ItemId);
             ViewData["VolunteerId"] = new SelectList(_context.Volunteers, "Id", "FirstName", transaction.VolunteerId);
-            return View(transaction);
+            return PartialView("~/Views/Transactions/_CreateTransaction.cshtml", transaction);
         }
 
         // GET: Transactions/Edit/5
@@ -87,7 +87,7 @@ namespace ScrapTrack.Core.Controllers
             }
             ViewData["ItemId"] = new SelectList(_context.Items, "Id", "Description", transaction.ItemId);
             ViewData["VolunteerId"] = new SelectList(_context.Volunteers, "Id", "FirstName", transaction.VolunteerId);
-            return View(transaction);
+            return PartialView("~/Views/Transactions/_EditTransaction.cshtml", transaction);
         }
 
         // POST: Transactions/Edit/5
@@ -120,11 +120,11 @@ namespace ScrapTrack.Core.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return PartialView("~/Views/Shared/_Success.cshtml");
             }
             ViewData["ItemId"] = new SelectList(_context.Items, "Id", "Description", transaction.ItemId);
             ViewData["VolunteerId"] = new SelectList(_context.Volunteers, "Id", "FirstName", transaction.VolunteerId);
-            return View(transaction);
+            return PartialView("~/Views/Transactions/_EditTransaction.cshtml", transaction);
         }
 
         // GET: Transactions/Delete/5
@@ -144,7 +144,7 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            return View(transaction);
+            return PartialView("~/Views/Transactions/_DeleteTransaction.cshtml", transaction);
         }
 
         // POST: Transactions/Delete/5
@@ -155,7 +155,7 @@ namespace ScrapTrack.Core.Controllers
             var transaction = await _context.Transactions.FindAsync(id);
             _context.Transactions.Remove(transaction);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return PartialView("~/Views/Shared/_Success.cshtml");
         }
 
         private bool TransactionExists(int id)

@@ -80,6 +80,25 @@
             </div>
             <div class="tabcontent-container">
                 <div id="transactions" class="tabcontent active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <h1>Transactions</h1>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input class="form-control search-box" type="text" id="tranactionsNameInput" onkeyup="searchTransactions()" placeholder="Search" title="Type in a search term">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <btn class="btn btn-primary mmodal-btn btnAddTransaction">Give Item</btn>
+                                    </div>
+                                </div>
+                                <div id="partial-transactions-list">
+                                    @Html.Partial("~/Views/Transactions/_ListTransactions.cshtml", Model.TransactionList)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="volunteers" class="tabcontent">

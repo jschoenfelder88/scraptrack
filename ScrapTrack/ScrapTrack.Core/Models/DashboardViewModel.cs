@@ -9,6 +9,7 @@ namespace ScrapTrack.Core.Models
 {
     public class DashboardViewModel
     {
+        public List<Transaction> TransactionList { get; set; }
         public List<Volunteer> VolunteerList { get; set; }
         public List<Item> ItemList { get; set; }
         public Volunteer TempVolunteer { get; set; }
