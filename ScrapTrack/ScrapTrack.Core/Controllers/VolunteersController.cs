@@ -80,7 +80,7 @@ namespace ScrapTrack.Core.Controllers
             {
                 return NotFound();
             }
-            return View(volunteer);
+            return PartialView("~/Views/Volunteers/_EditVolunteers.cshtml", volunteer);
         }
 
         // POST: Volunteers/Edit/5

@@ -12,7 +12,6 @@ namespace ScrapTrack.Data.DataAccess
         public DbSet<Volunteer> Volunteers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items{ get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
