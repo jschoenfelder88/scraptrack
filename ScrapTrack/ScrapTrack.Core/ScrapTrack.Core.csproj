@@ -23,4 +23,8 @@
     <ProjectReference Include="..\ScrapTrack.Data\ScrapTrack.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Transactions\" />
+  </ItemGroup>
+
 </Project>

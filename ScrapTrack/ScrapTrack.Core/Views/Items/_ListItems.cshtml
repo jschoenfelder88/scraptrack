@@ -36,26 +36,3 @@
         </tbody>
     </table>
 </div>
-
-
-<script>
-    function searchItems() {
-        input = document.getElementById("descriptionInput");
-        filter = input.value.toUpperCase();
-        console.log(filter)
-        table = document.getElementById("itemTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (i = 1; i < tr.length; i++) {
-            description = tr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
-
-            if (description !== undefined) {
-                if (description.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>

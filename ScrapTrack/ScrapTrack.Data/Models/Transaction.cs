@@ -11,14 +11,9 @@ namespace ScrapTrack.Data.Models
         public int Id { get; set; }
         [Required]
         public DateTime Date { get; set; }
-        [ForeignKey("User_ID")]
         public virtual ApplicationUser ApplicationUser { get; set; }
         public int VolunteerId { get; set; }
         public Volunteer Volunteer { get; set; }
-        public int ItemId { get; set; }
-        public Item Item { get; set; }
-        [Required]
-        public int Quantity { get; set; }
-
+        public ICollection<Transaction_Details> Details { get; set; }
     }
 }

@@ -23,7 +23,7 @@
                         </a>
                     </td>
                     <td>
-                        <a asp-controller="Volunteers asp-action="Details" asp-route-id="@item.Id">
+                        <a asp-controller="Volunteers" asp-action="Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.LastName)
                         </a>
                     </td>
@@ -31,29 +31,4 @@
             }
         </tbody>
     </table>
-            </div>
-
-<script>
-    function searchVolunteers() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("volunteerNameInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("volunteerTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (i = 1; i < tr.length; i++) {
-            firstName = tr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
-            lastName = tr[i].getElementsByTagName("td")[1].innerText.toUpperCase();
-            fullName = firstName + ' ' + lastName;
-
-            if (fullName !== undefined) {
-                if (fullName.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-</script>
+</div>

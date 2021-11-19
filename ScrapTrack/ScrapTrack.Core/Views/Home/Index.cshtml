@@ -87,14 +87,14 @@
                                 <h1>Transactions</h1>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input class="form-control search-box" type="text" id="tranactionsNameInput" onkeyup="searchTransactions()" placeholder="Search" title="Type in a search term">
+                                        <input class="form-control search-box" type="text" id="tranactionsNameInput" placeholder="Search" title="Type in a search term">
                                     </div>
                                     <div class="col-md-6">
                                         <btn class="btn btn-primary mmodal-btn btnAddTransaction">Give Item</btn>
                                     </div>
                                 </div>
                                 <div id="partial-transactions-list">
-                                    @Html.Partial("~/Views/Transactions/_ListTransactions.cshtml", Model.TransactionList)
+                                    
                                 </div>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                                 <h1>Volunteers</h1>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input class="form-control search-box" type="text" id="volunteerNameInput" onkeyup="searchVolunteers()" placeholder="Search" title="Type in a search term">
+                                        <input class="form-control search-box" type="text" id="volunteerNameInput" placeholder="Search" title="Type in a search term">
                                     </div>
                                     <div class="col-md-6">
                                         <btn class="btn btn-primary mmodal-btn btnAddVolunteer">New Volunteer</btn>
@@ -131,7 +131,7 @@
                                 <h1>Items</h1>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input class="form-control search-box" type="text" id="descriptionInput" onkeyup="searchItems()" placeholder="Search" title="Type in a search term">
+                                        <input class="form-control search-box" type="text" id="descriptionInput" placeholder="Search" title="Type in a search term">
                                     </div>
                                     <div class="col-md-6">
                                         <btn class="btn btn-primary mmodal-btn btnAddItem">New Item</btn>
@@ -161,14 +161,13 @@
 
 <script>
     $(document).ready(function () {
-
-        var tabs = $('.tablinks');
-        var tabsContent = $('.tabcontent');
-        var activeTab = $('.tablinks.active')[0];
-        var activeTabContent = $('.tabcontent.active')[0];
-
         $('.tablinks').on('click', function (e) {
             e.preventDefault();
+            tabs = $('.tablinks');
+            tabsContent = $('.tabcontent');
+            activeTab = $('.tablinks.active')[0];
+            activeTabContent = $('.tabcontent.active')[0];
+
             if (activeTab !== e.target) {
                 activeTab.className = activeTab.className.replace(' active', '');
                 e.target.className += ' active';
@@ -179,6 +178,47 @@
                         activeTabContent.className = activeTabContent.className.replace(' active', '');
                         tabsContent[i].className += ' active';
                         activeTabContent = tabsContent[i];
+                    }
+                }
+            }
+        });
+
+        $('#volunteerNameInput').on('keyup', function () {
+            input = document.getElementById("volunteerNameInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("volunteerTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                firstName = tr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
+                lastName = tr[i].getElementsByTagName("td")[1].innerText.toUpperCase();
+                fullName = firstName + ' ' + lastName;
+
+                if (fullName !== undefined) {
+                    if (fullName.indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        });
+
+        $('#descriptionInput').on('keyup', function () {
+            input = document.getElementById("descriptionInput");
+            filter = input.value.toUpperCase();
+            console.log(filter)
+            table = document.getElementById("itemTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                description = tr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
+
+                if (description !== undefined) {
+                    if (description.indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
                     }
                 }
             }

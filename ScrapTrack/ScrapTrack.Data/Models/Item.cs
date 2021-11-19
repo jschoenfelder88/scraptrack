@@ -20,7 +20,7 @@ namespace ScrapTrack.Data.Models
         [Display(Name = "Weight (lbs)")]
         [DisplayFormat(DataFormatString = "{0:0.#}")]
         public decimal Weight { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<Transaction_Details> Details { get; set; }
     }
 }
     

@@ -13,7 +13,7 @@ namespace ScrapTrack.Data.DataAccess
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items{ get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-
+        public DbSet<Transaction_Details> Transaction_Details { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
