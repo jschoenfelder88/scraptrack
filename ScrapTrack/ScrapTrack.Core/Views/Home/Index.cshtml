@@ -1,6 +1,6 @@
 ﻿@model ScrapTrack.Core.Models.DashboardViewModel
+
 @{
-    ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -27,8 +27,8 @@
 
     .tabcontent {
         display: none;
-        max-height: 650px;
-        padding-bottom: 2rem;
+        max-height: 550px;
+        padding-bottom: 2.2rem;
         border: 1px solid #ccc;
         border-bottom-left-radius: 1rem;
         border-bottom-right-radius: 1rem;
@@ -43,18 +43,8 @@
         display: block;
     }
 
-    .mmodal-btn {
-        float: right;
-        width: 9rem;
-    }
-
     .mmodal-partialview {
         display: none;
-    }
-
-    .quickaction-link {
-        float: left;
-        margin-bottom: .5rem;
     }
 </style>
 
@@ -71,7 +61,7 @@
                     <btn class="btn btn-success mmodal-btn quickaction-link btnAddItem">New Item</btn>
                 </div>
                 <div class="row">
-                    <btn class="btn btn-success mmodal-btn quickaction-link btnGiveItem">Give Item</btn>
+                    <btn class="btn btn-success mmodal-btn quickaction-link btnGiveItem">Give Items</btn>
                 </div>
             </div>
         </div>

@@ -12,7 +12,8 @@
 </div>
 <hr />
 <div>
-    <a class="btn btn-primary mmodal-btn btnEditItem" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-primary mmodal-btn quickaction-link btnEditItem" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-danger mmodal-btn quickaction-link btnDeleteItem" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
 </div>
 
 @Html.Partial("~/Views/Shared/_Modal.cshtml")
@@ -30,9 +31,9 @@
             });
         });
 
-    $('#partial-content').on('click', '#submitEditedItem', function (e) {
-        e.preventDefault();
-        $.ajax({
+        $('#partial-content').on('click', '#submitEditedItem', function (e) {
+            e.preventDefault();
+            $.ajax({
                 type: "POST",
                 url: '@Url.Action("Edit", "Items", new { id = Model.Id })',
                 data: $('form').serialize(),
@@ -47,6 +48,17 @@
                             $('#itemDetails').html(result);
                         }
                     });
+                }
+            });
+        });
+
+        $('.btnDeleteItem').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Delete", "Items", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
                 }
             });
         });

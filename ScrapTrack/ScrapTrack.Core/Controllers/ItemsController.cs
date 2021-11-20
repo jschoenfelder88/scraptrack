@@ -157,7 +157,7 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            return View(item);
+            return PartialView("~/Views/Items/_DeleteItem.cshtml", item);
         }
 
         // POST: Items/Delete/5
@@ -168,7 +168,7 @@ namespace ScrapTrack.Core.Controllers
             var item = await _context.Items.FindAsync(id);
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         private bool ItemExists(int id)

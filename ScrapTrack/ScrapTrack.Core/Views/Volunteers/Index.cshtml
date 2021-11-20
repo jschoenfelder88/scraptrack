@@ -12,7 +12,9 @@
 </div>
 <hr />
 <div>
-    <a class="btn btn-primary mmodal-btn btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-primary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-danger mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    <a class="btn btn-success mmodal-btn quickaction-link">Give Items</a>
 </div>
 
 @Html.Partial("~/Views/Shared/_Modal.cshtml")
@@ -46,6 +48,17 @@
                             $('#volunteerDetails').html(result);
                         }
                     });
+                }
+            });
+        });
+
+        $('.btnDeleteVolunteer').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Delete", "Volunteers", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
                 }
             });
         });

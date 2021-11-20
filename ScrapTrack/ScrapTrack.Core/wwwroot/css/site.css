@@ -80,7 +80,7 @@ body {
 
 .dt-vertical-scroll {
     margin: 20px 20px 0 0;
-    max-height: 450px;
+    max-height: 350px;
     width: 100%;
     overflow: auto;
     border-bottom: 1px solid #dee2e6;
@@ -147,6 +147,11 @@ body {
     border-radius: 5px;
 }
 
+.mmodal-btn {
+    float: right;
+    width: 9rem;
+}
+
 .close {
     color: #AAA;
     float: right;
@@ -172,4 +177,10 @@ h1 {
 
 .login {
     padding-top: 100px;
+}
+
+.quickaction-link {
+    float: left;
+    margin-bottom: .5rem;
+    margin-right: .5rem;
 }

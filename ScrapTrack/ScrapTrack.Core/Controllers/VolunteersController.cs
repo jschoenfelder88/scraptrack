@@ -150,7 +150,7 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            return View(volunteer);
+            return PartialView("~/Views/Volunteers/_DeleteVolunteer.cshtml",volunteer);
         }
 
         // POST: Volunteers/Delete/5
@@ -161,7 +161,7 @@ namespace ScrapTrack.Core.Controllers
             var volunteer = await _context.Volunteers.FindAsync(id);
             _context.Volunteers.Remove(volunteer);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         private bool VolunteerExists(int id)
