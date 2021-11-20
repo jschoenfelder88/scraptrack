@@ -1,6 +1,7 @@
 ﻿@model ScrapTrack.Core.Models.DashboardViewModel
 @{
     ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
@@ -41,6 +42,7 @@
     .tabcontent.active {
         display: block;
     }
+
     .mmodal-btn {
         float: right;
         width: 9rem;
@@ -49,6 +51,7 @@
     .mmodal-partialview {
         display: none;
     }
+
     .quickaction-link {
         float: left;
         margin-bottom: .5rem;
@@ -94,7 +97,7 @@
                                     </div>
                                 </div>
                                 <div id="partial-transactions-list">
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -117,7 +120,7 @@
                                 </div>
                                 <div id="partial-volunteer-list">
                                     @Html.Partial("~/Views/Volunteers/_ListVolunteers.cshtml", Model.VolunteerList)
-                                 </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -140,7 +143,7 @@
                                 <div id="partial-item-list">
                                     @Html.Partial("~/Views/Items/_ListItems.cshtml", Model.ItemList)
                                 </div>
-                               
+
                             </div>
                             <div class="col-md-1"></div>
                         </div>
@@ -149,15 +152,9 @@
             </div>
         </div>
     </div>
-</div>    
-
-<div class="mmodal">
-    <div class="mmodal-content">
-        <span class="close">&times;</span>
-        <div id="partial-content">
-        </div>
-    </div>
 </div>
+
+@Html.Partial("~/Views/Shared/_Modal.cshtml")
 
 <script>
     $(document).ready(function () {
@@ -236,7 +233,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: '@Url.Action("Index", "Volunteers")',
+                        url: '@Url.Action("List", "Volunteers")',
                         success: function (listResult) {
                             $("#partial-volunteer-list").html(listResult);
                         }
@@ -259,7 +256,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: '@Url.Action("Index", "Items")',
+                        url: '@Url.Action("List", "Items")',
                         success: function (listResult) {
                             $("#partial-item-list").html(listResult);
                         }

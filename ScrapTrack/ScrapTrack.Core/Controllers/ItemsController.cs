@@ -21,8 +21,7 @@ namespace ScrapTrack.Core.Controllers
             _context = context;
         }
 
-        // GET: Items
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> List()
         {
             var scrapskcContext = _context.Items.Include(i => i.Category);
             return PartialView("~/Views/Items/_ListItems.cshtml", await scrapskcContext.ToListAsync());
@@ -44,7 +43,25 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            return View(item);
+            return View("~/Views/Items/Index.cshtml", item);
+        }
+
+        public async Task<IActionResult> DetailsPartial(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _context.Items
+                .Include(i => i.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("~/Views/Items/_DetailItem.cshtml", item);
         }
 
         // GET: Items/Create
@@ -85,7 +102,7 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryId);
-            return View(item);
+            return PartialView("~/Views/Items/_EditItem.cshtml", item);
         }
 
         // POST: Items/Edit/5
@@ -118,10 +135,10 @@ namespace ScrapTrack.Core.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return PartialView("~/Views/Shared/_Success.cshtml");
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryId);
-            return View(item);
+            return PartialView("~/Views/Items/_EditItem.cshtml", item);
         }
 
         // GET: Items/Delete/5

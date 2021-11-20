@@ -27,7 +27,6 @@ namespace ScrapTrack.Core.Controllers
 
         public IActionResult Index()
         {
-            
             var dashboardModel = new DashboardViewModel()
             {
                 TransactionList = _context.Transactions.ToList(),

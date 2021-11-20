@@ -22,7 +22,7 @@ namespace ScrapTrack.Core.Controllers
         }
 
         // GET: Volunteers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> List()
         {
             return PartialView("~/Views/Volunteers/_ListVolunteers.cshtml", await _context.Volunteers.ToListAsync());
         }
@@ -42,7 +42,24 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            return View(volunteer);
+            return View("~/Views/Volunteers/Index.cshtml", volunteer);
+        }
+
+        public async Task<IActionResult> DetailsPartial(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var volunteer = await _context.Volunteers
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (volunteer == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("~/Views/Volunteers/_DetailVolunteer.cshtml", volunteer);
         }
 
         // GET: Volunteers/Create
@@ -80,7 +97,7 @@ namespace ScrapTrack.Core.Controllers
             {
                 return NotFound();
             }
-            return PartialView("~/Views/Volunteers/_EditVolunteers.cshtml", volunteer);
+            return PartialView("~/Views/Volunteers/_EditVolunteer.cshtml", volunteer);
         }
 
         // POST: Volunteers/Edit/5
@@ -113,9 +130,9 @@ namespace ScrapTrack.Core.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return PartialView("~/Views/Shared/_Success.cshtml");
             }
-            return View(volunteer);
+            return PartialView("~/Views/Volunteers/_EditVolunteer.cshtml", volunteer);
         }
 
         // GET: Volunteers/Delete/5
