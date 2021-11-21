@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ScrapTrack.Data.Models.Volunteer>
+
+
+<div class="dt-vertical-scroll">
+    <table class="table" id="volunteerTable">
+        <thead>
+            <tr>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Last Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Volunteers" asp-action="Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-controller="Volunteers" asp-action="Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

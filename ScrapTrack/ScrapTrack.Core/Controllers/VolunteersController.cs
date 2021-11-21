@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,19 +11,20 @@ using ScrapTrack.Data.Models;
 
 namespace ScrapTrack.Core.Controllers
 {
+    [Authorize]
     public class VolunteersController : Controller
     {
-        private readonly scrapskcContext _context;
+        private readonly AppDataDbContext _context;
 
-        public VolunteersController(scrapskcContext context)
+        public VolunteersController(AppDataDbContext context)
         {
             _context = context;
         }
 
         // GET: Volunteers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> List()
         {
-            return View(await _context.Volunteers.ToListAsync());
+            return PartialView("~/Views/Volunteers/_ListVolunteers.cshtml", await _context.Volunteers.ToListAsync());
         }
 
         // GET: Volunteers/Details/5
@@ -40,13 +42,30 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            return View(volunteer);
+            return View("~/Views/Volunteers/Index.cshtml", volunteer);
+        }
+
+        public async Task<IActionResult> DetailsPartial(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var volunteer = await _context.Volunteers
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (volunteer == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("~/Views/Volunteers/_DetailVolunteer.cshtml", volunteer);
         }
 
         // GET: Volunteers/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView("~/Views/Volunteers/_CreateVolunteer.cshtml");
         }
 
         // POST: Volunteers/Create
@@ -60,7 +79,7 @@ namespace ScrapTrack.Core.Controllers
             {
                 _context.Add(volunteer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return PartialView("~/Views/Shared/_Success.cshtml");
             }
             return View(volunteer);
         }
@@ -78,7 +97,7 @@ namespace ScrapTrack.Core.Controllers
             {
                 return NotFound();
             }
-            return View(volunteer);
+            return PartialView("~/Views/Volunteers/_EditVolunteer.cshtml", volunteer);
         }
 
         // POST: Volunteers/Edit/5
@@ -111,9 +130,9 @@ namespace ScrapTrack.Core.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return PartialView("~/Views/Shared/_Success.cshtml");
             }
-            return View(volunteer);
+            return PartialView("~/Views/Volunteers/_EditVolunteer.cshtml", volunteer);
         }
 
         // GET: Volunteers/Delete/5
@@ -131,7 +150,7 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            return View(volunteer);
+            return PartialView("~/Views/Volunteers/_DeleteVolunteer.cshtml",volunteer);
         }
 
         // POST: Volunteers/Delete/5
@@ -142,7 +161,7 @@ namespace ScrapTrack.Core.Controllers
             var volunteer = await _context.Volunteers.FindAsync(id);
             _context.Volunteers.Remove(volunteer);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         private bool VolunteerExists(int id)

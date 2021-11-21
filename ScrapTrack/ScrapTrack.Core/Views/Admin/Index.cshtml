@@ -1,0 +1,157 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .tabs {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        background-color: #585858;
+    }
+
+        .tabs button {
+            background-color: inherit;
+            color: #FFF;
+            font-weight: 600;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+    .tabcontent {
+        display: none;
+        min-height: 200px;
+        padding-bottom: 2rem;
+        border: 1px solid #ccc;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        border-top: none;
+    }
+
+    .tablinks.active {
+        color: #76D9FF;
+    }
+
+    .tabcontent.active {
+        display: block;
+    }
+    .mmodal-btn {
+        float: right;
+        width: 9rem;
+    }
+
+    .mmodal-partialview {
+        display: none;
+    }
+    .quickaction-link {
+        float: left;
+        margin-bottom: .5rem;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Administration</h3>
+            <hr />
+            <div class="container quickaction">
+                <div class="row">
+                    <btn id="createReport" class="btn btn-success mmodal-btn quickaction-link">New Report</btn>
+                    <btn id="createUser" class="btn btn-success mmodal-btn quickaction-link">New User</btn>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="tabs">
+                <button class="tablinks active">Reports</button>
+                <button class="tablinks">Users</button>
+            </div>
+            <div class="tabcontent-container">
+                <div id="reports" class="tabcontent active">
+                    <!--Reports Export Button-->
+                    <div align="center">
+                        <a href="Home/ExporttoExcel">Export Report to Excel</a>
+                    </div>
+                </div>
+                <div id="users" class="tabcontent">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="mmodal">
+    <div class="mmodal-content">
+        <span class="close">&times;</span>
+        <h4>Create a New User</h4>
+        <hr />
+        <div id="partial-content">
+            @Html.Partial("~/Views/Account/_Register.cshtml")
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        var tabs = $('.tablinks');
+        var tabsContent = $('.tabcontent');
+        var activeTab = $('.tablinks.active')[0];
+        var activeTabContent = $('.tabcontent.active')[0];
+
+        $('.tablinks').on('click', function (e) {
+            e.preventDefault();
+            if (activeTab !== e.target) {
+                activeTab.className = activeTab.className.replace(' active', '');
+                e.target.className += ' active';
+                activeTab = $('.tablinks.active')[0];
+
+                for (i = 0; i < tabsContent.length; i++) {
+                    if (tabs[i] === e.target) {
+                        activeTabContent.className = activeTabContent.className.replace(' active', '');
+                        tabsContent[i].className += ' active';
+                        activeTabContent = tabsContent[i];
+                    }
+                }
+            }
+        });
+
+        $('#partial-content').on('click', '#submitUserDetails', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Register", "Account")',
+                data: $('form').serialize(),
+                success: function (result) {
+                    console.log(result);
+                    $("#partial-content").html(result);
+                },
+                error: function (result) {
+                    console.log("error");
+                }
+            })
+        });
+
+        $('#createUser').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("Register", "Account")',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            })
+        })
+    });
+</script>

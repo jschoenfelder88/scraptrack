@@ -1,58 +1,66 @@
-﻿@model IEnumerable<ScrapTrack.Data.Models.Volunteer>
+﻿@model ScrapTrack.Data.Models.Volunteer
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>Volunteer Details</h1>
+<hr />
 
-
-<div class="container">
-    <h1>Volunteers</h1>
-    <div class="row">
-        <div class="col-8">
-            <input class="form-control search-box" type="text" id="myInput" onkeyup="search()" placeholder="Search" title="Type in a search term">
-            <div class="dt-vertical-scroll">
-                <table class="table" id="activeTable">
-                    <thead>
-                        <tr>
-                            <th class="table-checkbox-column"></th>
-                            <th>
-                                First Name
-                            </th>
-                            <th>
-                                Last Name
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="table-checkbox-column">
-                                    <input type="checkbox" />
-                                </td>
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@item.Id">
-                                        @Html.DisplayFor(modelItem => item.FirstName)                                    
-                                    </a>
-                                </td>
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@item.Id">
-                                        @Html.DisplayFor(modelItem => item.LastName)
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-4">
-            <h3>Actions</h3>
-            <p>
-                <a asp-action="Create">Create New</a>
-            </p>
-            <p>Click the volunteer's name to edit their details!</p>
-        </div>
-    </div>
+<div id="volunteerDetails">
+    @Html.Partial("~/Views/Volunteers/_DetailVolunteer.cshtml", Model)
 </div>
+<hr />
+<div>
+    <a class="btn btn-primary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-danger mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    <a class="btn btn-success mmodal-btn quickaction-link">Give Items</a>
+</div>
+
+@Html.Partial("~/Views/Shared/_Modal.cshtml")
+
+<script>
+    $(document).ready(function () {
+        $('.btnEditVolunteer').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Edit", "Volunteers", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+
+        $('#partial-content').on('click', '#submitEditedVolunteer', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Edit", "Volunteers", new { id = Model.Id })',
+                data: $('form').serialize(),
+                success: function (result) {
+                    $("#partial-content").html(result);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("DetailsPartial", "Volunteers", new { id = Model.Id })',
+                        success: function (result) {
+                            $('#volunteerDetails').html(result);
+                        }
+                    });
+                }
+            });
+        });
+
+        $('.btnDeleteVolunteer').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Delete", "Volunteers", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+    });
+</script>

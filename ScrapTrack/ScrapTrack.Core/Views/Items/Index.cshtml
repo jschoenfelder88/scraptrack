@@ -1,63 +1,66 @@
-﻿@model IEnumerable<ScrapTrack.Data.Models.Item>
+﻿@model ScrapTrack.Data.Models.Item
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <h1>Items</h1>
-    <div class="row">
-        <div class="col-8">
-            <input class="form-control search-box" type="text" id="myInput" onkeyup="search()" placeholder="Search" title="Type in a search term">
-            <div class="dt-vertical-scroll">
-                <table class="table" id="activeTable">
-                    <thead>
-                        <tr>
-                            <th class="table-checkbox-column"></th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Description)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Category)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Weight)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="table-checkbox-column">
-                                    <input type="checkbox" />
-                                </td>
-                                <td>
-                                    <a asp-action="Details" asp-route-id="@item.Id">
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </a>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Category.Description)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Weight)
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-4">
-            <h3>Actions</h3>
-            <p>
-                <a asp-action="Create">Create New</a>
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec vehicula lectus. Quisque elementum nec felis ac varius. Pellentesque non pretium lorem, vestibulum mollis risus. Nam quis venenatis metus. Ut in blandit risus. Duis ultricies lacinia quam eu ullamcorper. Vestibulum nec elit nec libero cursus maximus et imperdiet metus. Aliquam tristique dictum velit, eu egestas ipsum luctus a. Maecenas maximus neque porta ante dictum, sed laoreet mauris luctus. Donec nisi nisl, iaculis et lorem sed, iaculis eleifend sem. Etiam ut feugiat nunc. Proin id eros suscipit, tincidunt massa laoreet, aliquam augue. Nulla cursus nisl at dolor porta, sit amet venenatis tellus sodales. Integer gravida leo augue, vel efficitur diam gravida a. Nunc risus tellus, dapibus vitae lacus sit amet, mattis sodales nibh. Maecenas sit amet tempus ligula.
-                Aenean varius interdum vestibulum. Sed commodo ac justo vitae efficitur. Nullam facilisis nibh sed ipsum porta, nec sollicitudin mauris maximus. Nulla semper lorem lorem. Proin efficitur orci lacus, et volutpat augue sodales vel. Aliquam erat volutpat. In vulputate efficitur porttitor. Nulla pretium interdum sapien, quis pulvinar dui ultricies vitae. Nullam nulla justo, malesuada ut tempor a, laoreet ut elit. Donec vestibulum cursus metus sit amet lobortis. Quisque eu auctor eros. Suspendisse id mauris eu ligula semper aliquet. Etiam dolor mauris, posuere non vehicula eget, porttitor sit amet orci.
-            </p>
-        </div>
-    </div>
+<h1>Item Details</h1>
+<hr />
+
+<div id="itemDetails">
+    @Html.Partial("~/Views/Items/_DetailItem.cshtml", Model)
 </div>
+<hr />
+<div>
+    <a class="btn btn-primary mmodal-btn quickaction-link btnEditItem" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-danger mmodal-btn quickaction-link btnDeleteItem" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+</div>
+
+@Html.Partial("~/Views/Shared/_Modal.cshtml")
+
+<script>
+    $(document).ready(function () {
+        $('.btnEditItem').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Edit", "Items", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+
+        $('#partial-content').on('click', '#submitEditedItem', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Edit", "Items", new { id = Model.Id })',
+                data: $('form').serialize(),
+                success: function (result) {
+                    $("#partial-content").html(result);
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("DetailsPartial", "Items", new { id = Model.Id })',
+                        success: function (result) {
+                            console.log(result);
+                            $('#itemDetails').html(result);
+                        }
+                    });
+                }
+            });
+        });
+
+        $('.btnDeleteItem').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Delete", "Items", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+    });
+</script>

@@ -1,19 +1,26 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.navbar {
+    padding: .2rem;
+}
 a.navbar-brand img {
     height: 45px;
 }
-
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
+.nav-item {
+    padding-right: .5rem;
+}
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #FFF;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -72,8 +79,8 @@ body {
 -------------------------------------------------- */
 
 .dt-vertical-scroll {
-    margin: 20px 0 0 0;
-    max-height: 525px;
+    margin: 20px 20px 0 0;
+    max-height: 350px;
     width: 100%;
     overflow: auto;
     border-bottom: 1px solid #dee2e6;
@@ -116,6 +123,48 @@ body {
     font-weight: 700;
 }
 
+/* Modal styles
+-------------------------------------------------- */
+.mmodal {
+    position: fixed;
+    z-index: 1;
+    display: none;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.mmodal-content {
+    background-color: #FFF;
+    margin: auto;
+    width: 800px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.mmodal-btn {
+    float: right;
+    width: 9rem;
+}
+
+.close {
+    color: #AAA;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 /* Other styles
 -------------------------------------------------- */
 .search-box {
@@ -123,5 +172,15 @@ body {
 }
 
 h1 {
-    margin: 2rem 0;
+    margin: 1.5rem 0;
+}
+
+.login {
+    padding-top: 100px;
+}
+
+.quickaction-link {
+    float: left;
+    margin-bottom: .5rem;
+    margin-right: .5rem;
 }
