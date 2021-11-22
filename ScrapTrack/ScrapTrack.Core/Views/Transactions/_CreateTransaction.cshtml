@@ -1,0 +1,42 @@
+﻿@model ScrapTrack.Core.Models.TransactionViewModel
+
+<style>
+    #available-items {
+        margin-top: 30px;
+    }
+    #available-items .dt-vertical-scroll {
+        max-height: 250px;
+    }
+
+    #available-items .dt-vertical-scroll .table thead th{
+        font-size: .85rem;
+    }
+
+    #available-items .dt-vertical-scroll .table tbody td{
+        font-size: .8rem
+    }
+    #available-items .table tbody tr:hover {
+        cursor:pointer;
+        background-color: #ACE0AF;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-7">
+        <h3>Selected Items </h3>
+        <hr />
+        <div>
+
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div id="available-items">
+            <div class="row">
+                <h5>Available Items </h5>
+            </div>
+            <div class="row">
+                @Html.Partial("~/Views/Items/_ListItems.cshtml", Model.items)
+            </div>
+        </div>
+    </div>
+</div>

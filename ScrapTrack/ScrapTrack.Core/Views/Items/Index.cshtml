@@ -4,16 +4,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Item Details</h1>
-<hr />
-
-<div id="itemDetails">
-    @Html.Partial("~/Views/Items/_DetailItem.cshtml", Model)
-</div>
-<hr />
-<div>
-    <a class="btn btn-primary mmodal-btn quickaction-link btnEditItem" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <a class="btn btn-danger mmodal-btn quickaction-link btnDeleteItem" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Item Details</h3>
+            <hr />
+            <div id="itemDetails">
+                @Html.Partial("~/Views/Items/_DetailItem.cshtml", Model)
+            </div>
+            <hr />
+            <div>
+                <a class="btn btn-outline-secondary mmodal-btn quickaction-link btnEditItem" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <a class="btn btn-outline-secondary mmodal-btn quickaction-link btnDeleteItem" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
 </div>
 
 @Html.Partial("~/Views/Shared/_Modal.cshtml")

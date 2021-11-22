@@ -14,6 +14,6 @@ namespace ScrapTrack.Data.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
         public int VolunteerId { get; set; }
         public Volunteer Volunteer { get; set; }
-        public ICollection<Transaction_Details> Details { get; set; }
+        public IList<Transaction_Details> Details { get; set; }
     }
 }

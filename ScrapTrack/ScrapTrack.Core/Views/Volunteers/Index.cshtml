@@ -3,18 +3,45 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <h3 style="font-weight: 600;">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h3>
+            <div>
+                <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</btn>
+                <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnAddTransaction" asp-action="Create" asp-controller="Transactions" asp-route-id="@Model.Id">Give Items</btn>
+                <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete Profile</btn>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="tabs">
+                <button class="tablinks active">Donations</button>
+            </div>
+            <div class="tabcontent-container">
+                <div id="transactions" class="tabcontent active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <h4>Recent Donations to @Model.FirstName</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input class="form-control search-box" type="text" id="tranactionsNameInput" placeholder="Search" title="Type in a search term">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <btn class="btn btn-primary mmodal-btn btnAddTransaction">Give Items</btn>
+                                    </div>
+                                </div>
+                                <div id="partial-transactions-list">
 
-<h1>Volunteer Details</h1>
-<hr />
-
-<div id="volunteerDetails">
-    @Html.Partial("~/Views/Volunteers/_DetailVolunteer.cshtml", Model)
-</div>
-<hr />
-<div>
-    <a class="btn btn-primary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <a class="btn btn-danger mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-    <a class="btn btn-success mmodal-btn quickaction-link">Give Items</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @Html.Partial("~/Views/Shared/_Modal.cshtml")
@@ -57,6 +84,28 @@
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("Delete", "Volunteers", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+
+        $('.btnDeleteVolunteer').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Delete", "Volunteers", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+
+        $('.btnAddTransaction').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Create", "Transactions", new { id = Model.Id })',
                 success: function (result) {
                     $("#partial-content").html(result);
                 }

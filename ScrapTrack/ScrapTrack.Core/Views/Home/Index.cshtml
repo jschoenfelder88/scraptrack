@@ -5,69 +5,22 @@
 }
 
 <style>
-    .tabs {
-        overflow: hidden;
-        border: 1px solid #ccc;
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-        background-color: #585858;
-    }
-
-        .tabs button {
-            background-color: inherit;
-            color: #FFF;
-            font-weight: 600;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-        }
-
-    .tabcontent {
-        display: none;
-        max-height: 550px;
-        padding-bottom: 2.2rem;
-        border: 1px solid #ccc;
-        border-bottom-left-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-        border-top: none;
-    }
-
-    .tablinks.active {
-        color: #76D9FF;
-    }
-
-    .tabcontent.active {
-        display: block;
-    }
-
     .mmodal-partialview {
         display: none;
     }
 </style>
 
 <div class="container">
+    <div class="row justify-content-center">
+        <h1 class="pagetitle">Dashboard</h1>
+    </div>
     <div class="row">
-        <div class="col-md-3">
-            <h3>Dashboard</h3>
-            <hr />
-            <div class="container quickaction">
-                <div class="row">
-                    <btn class="btn btn-success mmodal-btn quickaction-link btnAddVolunteer">New Volunteer</btn>
-                </div>
-                <div class="row">
-                    <btn class="btn btn-success mmodal-btn quickaction-link btnAddItem">New Item</btn>
-                </div>
-                <div class="row">
-                    <btn class="btn btn-success mmodal-btn quickaction-link btnGiveItem">Give Items</btn>
-                </div>
-            </div>
+        <div class="col-md-2">
+            
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="tabs">
-                <button class="tablinks active">Transactions</button>
+                <button class="tablinks active">Donations</button>
                 <button class="tablinks">Volunteers</button>
                 <button class="tablinks">Items</button>
             </div>
@@ -77,13 +30,13 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
-                                <h1>Transactions</h1>
+                                <h4>Recent Donations</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <input class="form-control search-box" type="text" id="tranactionsNameInput" placeholder="Search" title="Type in a search term">
                                     </div>
                                     <div class="col-md-6">
-                                        <btn class="btn btn-primary mmodal-btn btnAddTransaction">Give Item</btn>
+                                        <btn class="btn btn-primary mmodal-btn btnAddTransaction">Give Items</btn>
                                     </div>
                                 </div>
                                 <div id="partial-transactions-list">
@@ -99,7 +52,7 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
-                                <h1>Volunteers</h1>
+                                <h4>All Volunteers</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <input class="form-control search-box" type="text" id="volunteerNameInput" placeholder="Search" title="Type in a search term">
@@ -121,7 +74,7 @@
                         <div class="row">
                             <div class="col-md-1"></div>
                             <div class="col-md-10">
-                                <h1>Items</h1>
+                                <h4>All Items</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <input class="form-control search-box" type="text" id="descriptionInput" placeholder="Search" title="Type in a search term">
@@ -138,6 +91,20 @@
                             <div class="col-md-1"></div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <h5>Quick Actions</h5>
+            <div class="container quickaction">
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnAddVolunteer">New Volunteer</btn>
+                </div>
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnAddItem">New Item</btn>
+                </div>
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnGiveItem">Give Items</btn>
                 </div>
             </div>
         </div>
@@ -254,6 +221,17 @@
                 },
                 error: function (result) {
                     console.log(result);
+                }
+            });
+        });
+
+        $('.btnAddTransaction').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Create", "Transactions")',
+                success: function (result) {
+                    $("#partial-content").html(result);
                 }
             });
         });

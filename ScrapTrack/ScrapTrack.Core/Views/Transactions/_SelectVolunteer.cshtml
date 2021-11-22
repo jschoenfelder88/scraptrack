@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ScrapTrack.Data.Models.Volunteer>
+
+<h1>Give Items</h1>
+<h3>Select a volunteer to give items</h3>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

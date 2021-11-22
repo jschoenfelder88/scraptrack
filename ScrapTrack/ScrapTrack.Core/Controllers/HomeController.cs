@@ -33,7 +33,7 @@ namespace ScrapTrack.Core.Controllers
                 ItemList = _context.Items.Include(a => a.Category).ToList(),
                 VolunteerList = _context.Volunteers.ToList(),
                 CategoryId = new SelectList(_context.Categories, "Id", "Description")
-        };
+            };
 
             return View(dashboardModel);
         }
