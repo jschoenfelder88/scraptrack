@@ -125,6 +125,7 @@ body {
 .table td, .table th {
     padding: .5rem;
 }
+
 .table tbody tr:hover {
     background-color: #F2F5F8;
 }
@@ -153,7 +154,7 @@ body {
 .mmodal-content {
     background-color: #FCFCFC;
     margin: auto;
-    width: 800px;
+    width: 900px;
     padding: 20px;
     border-radius: 5px;
 }

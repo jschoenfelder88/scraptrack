@@ -2,7 +2,7 @@
 
 <style>
     #available-items {
-        margin-top: 30px;
+        margin-top: 10px;
     }
     #available-items .dt-vertical-scroll {
         max-height: 250px;
@@ -17,26 +17,103 @@
     }
     #available-items .table tbody tr:hover {
         cursor:pointer;
+        background-color: #D5E9FC;
+    }
+
+    #available-items .table tbody .row-active {
         background-color: #ACE0AF;
+    }
+
+    #available-items .table tbody .row-active:hover {
+        background-color: indianred;
+    }
+    #mmodal-subtitle {
+        padding-bottom: 0;
+    }
+
+    .selectedItems {
+        height: 300px;
+        background-color: #FFF;
+        border: 1px solid #dee2e6;
+        border-top: 0;
+    }
+
+    #selectedItemsTable tr th {
+        font-size: .8rem;
+        font-weight: 600;
+        color: #B4BBC3; 
+    }
+    #selectedItemsTable .tableheader {
+        border-bottom: 1px solid #dee2e6;
+    }
+    #selectedItemsTable .tableheader:hover {
+        background-color: #FFF;
     }
 </style>
 
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-6">
         <h3>Selected Items </h3>
-        <hr />
-        <div>
-
+        <div class="selectedItems">
+            <table class="table" id="selectedItemsTable">
+                <tr class="tableheader">
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th></th>
+                </tr>
+            </table>
         </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-6">
         <div id="available-items">
             <div class="row">
-                <h5>Available Items </h5>
+                <h5 class="mmodal-subtitle">Available Items </h5>
             </div>
             <div class="row">
-                @Html.Partial("~/Views/Items/_ListItems.cshtml", Model.items)
+                <input class="form-control search-box" type="text" id="descriptionInput" placeholder="Search" title="Type in a search term">
+            </div>
+            <div class="row">
+                    @Html.Partial("~/Views/Items/_ListItems.cshtml", Model.items)
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#descriptionInput').on('keyup', function () {
+            input = document.getElementById("descriptionInput");
+            filter = input.value.toUpperCase();
+            console.log(filter)
+            table = document.getElementById("itemTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                description = tr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
+
+                if (description !== undefined) {
+                    if (description.indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        });
+    });
+
+    $('#available-items .table tbody tr').on('click', function (e) {
+        e.preventDefault();
+        targetParent = e.target.parentElement
+
+        if (targetParent.tagName == 'TR') {
+            if (targetParent.className.indexOf("row-active") > -1) {
+                // Run if active
+                targetParent.className = targetParent.className.replace(' row-active', '');
+            } else {
+                // Run if not active
+                e.target.parentElement.className += " row-active";
+            }
+        }
+    });
+</script>

@@ -4,16 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container">
+    <div class="row justify-content-center">
+        <h1 class="pagetitle">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h1>
+    </div>
     <div class="row">
-        <div class="col-md-3">
-            <h3 style="font-weight: 600;">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h3>
-            <div>
-                <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</btn>
-                <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnAddTransaction" asp-action="Create" asp-controller="Transactions" asp-route-id="@Model.Id">Give Items</btn>
-                <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete Profile</btn>
-            </div>
-        </div>
-        <div class="col-md-9">
+        <div class="col-2"></div>
+        <div class="col-md-8">
             <div class="tabs">
                 <button class="tablinks active">Donations</button>
             </div>
@@ -38,6 +34,20 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <h5>Quick Actions</h5>
+            <div class="container quickaction">
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</btn>
+                </div>
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnAddTransaction" asp-action="Create" asp-controller="Transactions" asp-route-id="@Model.Id">Give Items</btn>
+                </div>
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete Profile</btn>
                 </div>
             </div>
         </div>
