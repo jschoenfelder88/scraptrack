@@ -45,7 +45,7 @@
         font-size: .8rem;
         font-weight: 600;
         color: #B4BBC3;
-        width: 50%;
+        width: 30%;
         border-top: 1px solid #dee2e6;
         border-right: 1px solid #dee2e6;
     }
@@ -71,7 +71,7 @@
         cursor: pointer;
     }
     .removeTD {
-        width: 35px;
+        width: 10%;
     }
 
     #itemTable td,
@@ -97,6 +97,7 @@
                 <thead>
                     <tr class="tableheader">
                         <th>Item</th>
+                        <th>Weight (lbs)</th>
                         <th class="last-header">Quantity</th>
                         <th class="last-header"></th>
                     </tr>
@@ -162,6 +163,7 @@
                 } else {
                     // Run if clicking on item that hasn't been selected
                     itemName = e.target.parentElement.firstElementChild.textContent.trim();
+                    itemWeight = e.target.parentElement.children[2].textContent.trim();
                     itemId = e.target.parentElement.dataset.itemId;
 
                     dropdownOptions = "<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>"
@@ -169,9 +171,10 @@
                     deleteXTD = '<td class="text-center removeTD"><span class="removeSelectedItem">&times;</span></td>'
                     quantityDropdown = '<select class="form-control form-control-sm">' + dropdownOptions + '</select>'
                     newDescriptionTD = '<td class="align-middle">' + itemName + '</td>';
+                    newWeightTD = '<td class="align-middle weight-td">' + itemWeight + '</td>';
                     newQuantityTD = '<td>' + quantityDropdown + '</td>';
 
-                    newRow = '<tr class="selectedItemRow" data-selecteditem-id="' + itemId + '">' + newDescriptionTD + newQuantityTD + deleteXTD + '</tr >';
+                    newRow = '<tr class="selectedItemRow" data-selecteditem-id="' + itemId + '">' + newDescriptionTD + newWeightTD + newQuantityTD + deleteXTD + '</tr >';
 
                     e.target.parentElement.className += " row-active";
                     $("#selectedItemsTable tbody:last-child")
