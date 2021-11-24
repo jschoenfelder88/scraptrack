@@ -163,7 +163,7 @@
                 } else {
                     // Run if clicking on item that hasn't been selected
                     itemName = e.target.parentElement.firstElementChild.textContent.trim();
-                    itemWeight = e.target.parentElement.children[2].textContent.trim();
+                    itemWeight = e.target.parentElement.children[1].textContent.trim();
                     itemId = e.target.parentElement.dataset.itemId;
 
                     dropdownOptions = "<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>"
@@ -171,7 +171,7 @@
                     deleteXTD = '<td class="text-center removeTD"><span class="removeSelectedItem">&times;</span></td>'
                     quantityDropdown = '<select class="form-control form-control-sm">' + dropdownOptions + '</select>'
                     newDescriptionTD = '<td class="align-middle">' + itemName + '</td>';
-                    newWeightTD = '<td class="align-middle weight-td">' + itemWeight + '</td>';
+                    newWeightTD = '<td class="align-middle">' + itemWeight + '</td>';
                     newQuantityTD = '<td>' + quantityDropdown + '</td>';
 
                     newRow = '<tr class="selectedItemRow" data-selecteditem-id="' + itemId + '">' + newDescriptionTD + newWeightTD + newQuantityTD + deleteXTD + '</tr >';

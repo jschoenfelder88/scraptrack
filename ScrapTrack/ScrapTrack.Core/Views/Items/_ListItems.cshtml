@@ -8,11 +8,11 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
+                <th >
+                    @Html.DisplayNameFor(model => model.Weight)
                 </th>
                 <th class="last-header">
-                    @Html.DisplayNameFor(model => model.Weight)
+                    @Html.DisplayNameFor(model => model.Category)
                 </th>
             </tr>
         </thead>
@@ -26,10 +26,10 @@
                         </a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Category.Description)
+                        @Html.DisplayFor(modelItem => item.Weight)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Weight)
+                        @Html.DisplayFor(modelItem => item.Category.Description)
                     </td>
                 </tr>
             }
