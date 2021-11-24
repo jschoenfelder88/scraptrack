@@ -83,10 +83,10 @@ body {
 
 .dt-vertical-scroll {
     margin: 10px 20px 10px 0;
-    max-height: 350px;
+    height: 350px;
     width: 100%;
     overflow: auto;
-    border-bottom: 1px solid #dee2e6;
+    border: 1px solid #dee2e6;
     background-color: #FFF;
 }
 
@@ -99,13 +99,11 @@ body {
 .dt-vertical-scroll .table {
     border-collapse: separate;
     border-spacing: 0;
-    border-left: 1px solid #dee2e6;
-    border-right: 1px solid #dee2e6;
     margin: 0;
 }
 
 .dt-vertical-scroll .table thead th {
-    border-top: 1px solid #dee2e6;
+    border-top: 0;
     border-right: 1px solid #dee2e6;
     border-bottom: 1px solid #dee2e6;
     font-size: .8rem;
@@ -202,7 +200,7 @@ body {
 
 .tabcontent {
     display: none;
-    max-height: 550px;
+    height: 500px;
     padding-bottom: 15px;
     border: 1px solid #ccc;
     border-bottom-left-radius: .2rem;
