@@ -130,7 +130,7 @@ namespace ScrapTrack.Core.Controllers
                         throw;
                     }
                 }
-                return PartialView("~/Views/Shared/_Success.cshtml");
+                return RedirectToAction("Details", "Volunteers", new { id = volunteer.Id} );
             }
             return PartialView("~/Views/Volunteers/_EditVolunteer.cshtml", volunteer);
         }

@@ -69,26 +69,6 @@
             });
         });
 
-        $('#partial-content').on('click', '#submitEditedVolunteer', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Edit", "Volunteers", new { id = Model.Id })',
-                data: $('form').serialize(),
-                success: function (result) {
-                    $("#partial-content").html(result);
-
-                    $.ajax({
-                        type: 'GET',
-                        url: '@Url.Action("DetailsPartial", "Volunteers", new { id = Model.Id })',
-                        success: function (result) {
-                            $('#volunteerDetails').html(result);
-                        }
-                    });
-                }
-            });
-        });
-
         $('.btnDeleteVolunteer').on('click', function (e) {
             e.preventDefault();
             $.ajax({

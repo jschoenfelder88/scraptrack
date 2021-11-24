@@ -135,7 +135,7 @@ namespace ScrapTrack.Core.Controllers
                         throw;
                     }
                 }
-                return PartialView("~/Views/Shared/_Success.cshtml");
+                return RedirectToAction("Details", "Items", new { id = item.Id });
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryId);
             return PartialView("~/Views/Items/_EditItem.cshtml", item);
