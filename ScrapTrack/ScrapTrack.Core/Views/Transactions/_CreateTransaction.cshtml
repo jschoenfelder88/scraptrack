@@ -91,7 +91,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <h3>Selected Items </h3>
+        <h3>Selected Items for @Model.volunteer.FirstName</h3>
         <div class="selectedItems dt-vertical-scroll">
             <table class="table" id="selectedItemsTable">
                 <thead>
@@ -194,6 +194,29 @@
             // Change backgroung color of the same item in the available items list
             itemFromAvailableItems = $('#itemTable tr[data-item-id="' + selectedItemId + '"]')[0]
             itemFromAvailableItems.className = itemFromAvailableItems.className.replace(' row-active', '');
+        });
+
+        $('.btnSubmitTransaction').on('click', function (e) {
+            transactionItems = [];
+            selectedItems = $("#selectedItemsTable tbody tr");
+
+            for (i = 0; i < selectedItems.length; i++) {
+                transactionItems.push({
+                    ItemId: parseInt(selectedItems[i].dataset.selecteditemId),
+                    Quantity: parseInt(selectedItems[i].children[2].children[0].value)
+                });
+
+            }
+
+            $.ajax({
+                url: "@Url.Action("Create", "Transactions", new { id = Model.volunteer.Id}) ",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(transactionItems),
+                success: function () {
+                        console.log('yes');
+                    }
+                });
         });
     });
 </script>

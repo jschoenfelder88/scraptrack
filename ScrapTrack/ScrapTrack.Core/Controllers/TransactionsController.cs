@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScrapTrack.Core.Models;
 using ScrapTrack.Data.DataAccess;
@@ -13,10 +14,12 @@ namespace ScrapTrack.Core.Controllers
     public class TransactionsController : Controller
     {
         private readonly AppDataDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TransactionsController(AppDataDbContext context)
+        public TransactionsController(AppDataDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> SelectVolunteer()
@@ -44,5 +47,32 @@ namespace ScrapTrack.Core.Controllers
             };
             return PartialView("~/Views/Transactions/_CreateTransaction.cshtml", viewModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(int id, [FromBody] List<TransactionItem> transactionItems)
+        {
+            DateTime transactionSubmission = DateTime.Now;
+            ApplicationUser curAppUser = await _userManager.GetUserAsync(User);
+            Volunteer volunteer = await _context.Volunteers
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            Transaction newTransaction = new Transaction()
+            {
+                Date = transactionSubmission,
+                ApplicationUser = curAppUser,
+                Volunteer = volunteer
+            };
+
+            _context.Add(newTransaction);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+    }
+
+    public class TransactionItem
+    {
+        public int ItemId { get; set; }
+        public int Quantity { get; set; }
     }
 }
