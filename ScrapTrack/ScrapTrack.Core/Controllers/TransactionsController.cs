@@ -64,7 +64,23 @@ namespace ScrapTrack.Core.Controllers
             };
 
             _context.Add(newTransaction);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
+
+
+            for (int i = 0; i < transactionItems.Count; i++ )
+            {
+                Item selectedItem = await _context.Items.FirstOrDefaultAsync(m => m.Id == transactionItems[i].ItemId);
+
+                Transaction_Details transactionDetail = new Transaction_Details()
+                {
+                    Item = selectedItem,
+                    Quantity = transactionItems[i].Quantity,
+                    Transaction = newTransaction
+                };
+
+                _context.Add(transactionDetail);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToAction("Index", "Home");
         }
