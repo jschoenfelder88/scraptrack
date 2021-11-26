@@ -14,9 +14,9 @@ namespace ScrapTrack.Core.Controllers
     [Authorize]
     public class VolunteersController : Controller
     {
-        private readonly AppDataDbContext _context;
+        private readonly DataDbContext _context;
 
-        public VolunteersController(AppDataDbContext context)
+        public VolunteersController(DataDbContext context)
         {
             _context = context;
         }

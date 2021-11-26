@@ -13,10 +13,10 @@ namespace ScrapTrack.Core.Controllers
 {
     public class TransactionsController : Controller
     {
-        private readonly AppDataDbContext _context;
+        private readonly DataDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public TransactionsController(AppDataDbContext context, UserManager<ApplicationUser> userManager)
+        public TransactionsController(DataDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -51,37 +51,41 @@ namespace ScrapTrack.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(int id, [FromBody] List<TransactionItem> transactionItems)
         {
-            DateTime transactionSubmission = DateTime.Now;
-            ApplicationUser curAppUser = await _userManager.GetUserAsync(User);
-            Volunteer volunteer = await _context.Volunteers
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            Transaction newTransaction = new Transaction()
+            if (User.Identity.IsAuthenticated)
             {
-                Date = transactionSubmission,
-                ApplicationUser = curAppUser,
-                Volunteer = volunteer
-            };
+                DateTime transactionSubmission = DateTime.Now;
+                ApplicationUser curAppUser = await _userManager.GetUserAsync(User);
+                Volunteer volunteer = await _context.Volunteers
+                    .FirstOrDefaultAsync(m => m.Id == id);
 
-            _context.Add(newTransaction);
-            _context.SaveChanges();
-
-
-            for (int i = 0; i < transactionItems.Count; i++ )
-            {
-                Item selectedItem = await _context.Items.FirstOrDefaultAsync(m => m.Id == transactionItems[i].ItemId);
-
-                Transaction_Details transactionDetail = new Transaction_Details()
+                Transaction newTransaction = new Transaction()
                 {
-                    Item = selectedItem,
-                    Quantity = transactionItems[i].Quantity,
-                    Transaction = newTransaction
+                    Date = transactionSubmission,
+                    ApplicationUser = curAppUser,
+                    Volunteer = volunteer
                 };
 
-                _context.Add(transactionDetail);
-                await _context.SaveChangesAsync();
-            }
+                _context.Add(newTransaction);
+                _context.SaveChanges();
 
+
+                for (int i = 0; i < transactionItems.Count; i++)
+                {
+                    Item selectedItem = await _context.Items.FirstOrDefaultAsync(m => m.Id == transactionItems[i].ItemId);
+
+                    Transaction_Details transactionDetail = new Transaction_Details()
+                    {
+                        Item = selectedItem,
+                        Quantity = transactionItems[i].Quantity,
+                        Transaction = newTransaction
+                    };
+
+                    _context.Add(transactionDetail);
+                    await _context.SaveChangesAsync();
+                }
+
+                return PartialView("~/Views/Shared/_Success.cshtml");
+            }
             return RedirectToAction("Index", "Home");
         }
     }

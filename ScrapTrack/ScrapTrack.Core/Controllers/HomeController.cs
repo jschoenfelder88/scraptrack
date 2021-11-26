@@ -18,8 +18,8 @@ namespace ScrapTrack.Core.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private readonly AppDataDbContext _context;
-        public HomeController(ILogger<HomeController> logger, AppDataDbContext context)
+        private readonly DataDbContext _context;
+        public HomeController(ILogger<HomeController> logger, DataDbContext context)
         {
             _logger = logger;
             _context = context;
