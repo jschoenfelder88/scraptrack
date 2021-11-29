@@ -14,17 +14,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var vol in Model)
             {
-                <tr>
+                <tr data-volunteer-id="@vol.Id">
                     <td>
-                        <a asp-controller="Volunteers" asp-action="Details" asp-route-id="@item.Id">
-                            @Html.DisplayFor(modelItem => item.FirstName)
+                        <a asp-controller="Volunteers" asp-action="Details" asp-route-id="@vol.Id">
+                            @Html.DisplayFor(modelItem => vol.FirstName)
                         </a>
                     </td>
                     <td>
-                        <a asp-controller="Volunteers" asp-action="Details" asp-route-id="@item.Id">
-                            @Html.DisplayFor(modelItem => item.LastName)
+                        <a asp-controller="Volunteers" asp-action="Details" asp-route-id="@vol.Id">
+                            @Html.DisplayFor(modelItem => vol.LastName)
                         </a>
                     </td>
                 </tr>
