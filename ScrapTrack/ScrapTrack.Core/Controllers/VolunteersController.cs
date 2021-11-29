@@ -35,7 +35,7 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            var volunteer = await _context.Volunteers
+            var volunteer = await _context.Volunteers.Include(m => m.Transactions.Select(t => t.ApplicationUser))
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (volunteer == null)
             {

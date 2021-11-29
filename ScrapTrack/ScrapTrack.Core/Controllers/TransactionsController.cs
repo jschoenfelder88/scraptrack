@@ -22,6 +22,18 @@ namespace ScrapTrack.Core.Controllers
             _userManager = userManager;
         }
 
+        public async Task<IActionResult> DisplayList(int? id)
+        {
+            if (id != null)
+            {
+                List<Transaction> volunteerTransactions = await _context.Transactions.Where(r => r.VolunteerId == id).Include(t => t.Volunteer).Include(t => t.ApplicationUser).ToListAsync();
+                return PartialView("~/Views/Transactions/_ListTransactions.cshtml", volunteerTransactions);
+            }
+
+            List<Transaction> transactions = await _context.Transactions.Include(t => t.Volunteer).ToListAsync();
+            return PartialView("~/Views/Transactions/_ListTransactions.cshtml", transactions);
+        }
+
         public async Task<IActionResult> SelectVolunteer()
         {
             return PartialView("~/Views/Transactions/_SelectVolunteer.cshtml", await _context.Volunteers.ToListAsync());

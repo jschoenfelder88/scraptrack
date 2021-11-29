@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ScrapTrack.Data.Models.Transaction>
+
+<div class="dt-vertical-scroll">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    User
+                </th>
+                <th class="last-header">
+                    @Html.DisplayNameFor(model => model.Volunteer)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplicationUser.FirstName) @Html.DisplayFor(modelItem => item.ApplicationUser.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Volunteer.FirstName) @Html.DisplayFor(modelItem => item.Volunteer.LastName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
