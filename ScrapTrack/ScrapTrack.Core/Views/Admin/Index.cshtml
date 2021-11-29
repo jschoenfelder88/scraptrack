@@ -43,10 +43,8 @@
 <div class="mmodal">
     <div class="mmodal-content">
         <span class="close">&times;</span>
-        <h4>Create a New User</h4>
-        <hr />
         <div id="partial-content">
-            @Html.Partial("~/Views/Account/_Register.cshtml")
+            @{ await Html.RenderPartialAsync("~/Views/Account/_Register.cshtml"); }
         </div>
     </div>
 </div>

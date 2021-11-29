@@ -41,10 +41,10 @@
             <h5>Quick Actions</h5>
             <div class="container quickaction">
                 <div class="row">
-                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</btn>
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnGiveItems" asp-action="Create" asp-controller="Transactions" asp-route-id="@Model.Id">Give Items</btn>
                 </div>
                 <div class="row">
-                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnAddTransaction" asp-action="Create" asp-controller="Transactions" asp-route-id="@Model.Id">Give Items</btn>
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</btn>
                 </div>
                 <div class="row">
                     <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete Profile</btn>
@@ -54,7 +54,7 @@
     </div>
 </div>
 
-@Html.Partial("~/Views/Shared/_Modal.cshtml")
+@{ await Html.RenderPartialAsync("~/Views/Shared/_Modal.cshtml"); }
 
 <script>
     $(document).ready(function () {
@@ -80,18 +80,7 @@
             });
         });
 
-        $('.btnDeleteVolunteer').on('click', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("Delete", "Volunteers", new { id = Model.Id })',
-                success: function (result) {
-                    $("#partial-content").html(result);
-                }
-            });
-        });
-
-        $('.btnAddTransaction').on('click', function (e) {
+        $('.btnGiveItems').on('click', function (e) {
             e.preventDefault();
             $.ajax({
                 type: 'GET',

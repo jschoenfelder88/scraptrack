@@ -10,7 +10,7 @@
             <h3>Item Details</h3>
             <hr />
             <div id="itemDetails">
-                @Html.Partial("~/Views/Items/_DetailItem.cshtml", Model)
+                @{ await Html.RenderPartialAsync("~/Views/Items/_DetailItem.cshtml", Model); }
             </div>
             <hr />
             <div>
@@ -22,7 +22,7 @@
     </div>
 </div>
 
-@Html.Partial("~/Views/Shared/_Modal.cshtml")
+@{ await Html.RenderPartialAsync("~/Views/Shared/_Modal.cshtml"); }
 
 <script>
     $(document).ready(function () {

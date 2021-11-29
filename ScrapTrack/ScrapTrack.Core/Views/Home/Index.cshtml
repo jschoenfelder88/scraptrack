@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div id="partial-volunteer-list">
-                                    @Html.Partial("~/Views/Volunteers/_ListVolunteers.cshtml", Model.VolunteerList)
+                                    @{ await Html.RenderPartialAsync("~/Views/Volunteers/_ListVolunteers.cshtml", Model.VolunteerList); }
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                                     </div>
                                 </div>
                                 <div id="partial-item-list">
-                                    @Html.Partial("~/Views/Items/_ListItems.cshtml", Model.ItemList)
+                                    @{ await Html.RenderPartialAsync("~/Views/Items/_ListItems.cshtml", Model.ItemList); }
                                 </div>
 
                             </div>
@@ -98,23 +98,25 @@
             <h5>Quick Actions</h5>
             <div class="container quickaction">
                 <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnGiveItem">Give Items</btn>
+                </div>
+                <div class="row">
                     <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnAddVolunteer">New Volunteer</btn>
                 </div>
                 <div class="row">
                     <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnAddItem">New Item</btn>
-                </div>
-                <div class="row">
-                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnGiveItem">Give Items</btn>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@Html.Partial("~/Views/Shared/_Modal.cshtml")
+@{ await Html.RenderPartialAsync("~/Views/Shared/_Modal.cshtml"); }
 
 <script>
     $(document).ready(function () {
+        /* Tabs
+        ******************************************************************/
         $('.tablinks').on('click', function (e) {
             e.preventDefault();
             tabs = $('.tablinks');
@@ -137,6 +139,8 @@
             }
         });
 
+        /* Search Boxes
+        ******************************************************************/
         $('#volunteerNameInput').on('keyup', function () {
             input = document.getElementById("volunteerNameInput");
             filter = input.value.toUpperCase();
@@ -178,6 +182,43 @@
             }
         });
 
+        /* Modal activation for quick action buttons
+        ******************************************************************/
+        $('.btnGiveItem').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("SelectVolunteer", "Transactions")',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+
+        $('.btnAddVolunteer').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Create", "Volunteers")',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+
+        $('.btnAddItem').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Create", "Items")',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+
+        /* POST for Item & Volunteer creation
+        ******************************************************************/
         $('#partial-content').on('click', '#submitVolunteerDetails', function (e) {
             e.preventDefault();
             $.ajax({
@@ -221,39 +262,6 @@
                 },
                 error: function (result) {
                     console.log(result);
-                }
-            });
-        });
-
-        $('.btnAddTransaction').on('click', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("Create", "Transactions")',
-                success: function (result) {
-                    $("#partial-content").html(result);
-                }
-            });
-        });
-
-        $('.btnAddVolunteer').on('click', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("Create", "Volunteers")',
-                success: function (result) {
-                    $("#partial-content").html(result);
-                }
-            });
-        });
-
-        $('.btnAddItem').on('click', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("Create", "Items")',
-                success: function (result) {
-                    $("#partial-content").html(result);
                 }
             });
         });

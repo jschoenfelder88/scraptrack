@@ -82,7 +82,7 @@ body {
 -------------------------------------------------- */
 
 .dt-vertical-scroll {
-    margin: 10px 20px 10px 0;
+    margin-top: 1rem;
     height: 350px;
     width: 100%;
     overflow: auto;
@@ -152,7 +152,7 @@ body {
 .mmodal-content {
     background-color: #FCFCFC;
     margin: auto;
-    width: 900px;
+    width: 1000px;
     padding: 20px;
     border-radius: 5px;
 }
@@ -271,4 +271,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .container {
     max-width: 1200px;
+}
+
+.form-group select,
+.form-group input[type='text'],
+.form-group input[type='password'] {
+    width: 250px
+}
+
+.form-group .center-btn {
+    width: 9rem;
 }
