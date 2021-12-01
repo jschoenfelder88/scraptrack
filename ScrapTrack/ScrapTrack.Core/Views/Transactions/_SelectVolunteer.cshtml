@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ScrapTrack.Data.Models.Volunteer>
+
+<style>
+    #selectVolunteerContainer .table tbody tr {
+        cursor: pointer;
+    }
+
+    #selectVolunteerContainer .table tbody .row-active,
+    #selectVolunteerContainer .table tbody .row-active:hover {
+        background-color: #ACE0AF;
+    }
+</style>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3>Select a Volunteer to Give Items</h3>
+        <hr />
+        <input class="form-control search-box" type="text" id="selectVolunteerInput" placeholder="Search" title="Type in a search term">
+        <div id="selectVolunteerContainer">
+            @{ await Html.RenderPartialAsync("~/Views/Volunteers/_ListVolunteers.cshtml", Model); }
+        </div>
+        <hr />
+        <btn class="btn btn-primary mmodal-btn btnSelectVolunteer">Next</btn>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#selectVolunteerInput').on('keyup', function () {
+            input = document.getElementById("selectVolunteerInput")
+            filter = input.value.toUpperCase();
+            table = $("#selectVolunteerContainer #volunteerTable");
+            tr = table[0].getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                firstName = tr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
+                lastName = tr[i].getElementsByTagName("td")[1].innerText.toUpperCase();
+                fullName = firstName + ' ' + lastName;
+
+                if (fullName !== undefined) {
+                    if (fullName.indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        });
+
+        $("#selectVolunteerContainer .table tbody tr").on('click', function (e) {
+            e.preventDefault();
+            targetParent = e.target.parentElement;
+
+            if (targetParent.tagName == 'TR') {
+                if (targetParent.className.indexOf("row-active") > -1) {
+                    // Run if row clicked is active
+                    targetParent.className = targetParent.className.replace(' row-active', '');
+
+                } else {
+                    // Run if row clicked is not active
+
+                    // Remove any active row
+                    if ($('.row-active').length > 0)
+                        $('.row-active')[0].className = $('.row-active')[0].className.replace(' row-active', '');
+
+                    targetParent.className += " row-active";
+                }
+            }
+        });
+
+        $('.btnSelectVolunteer').on('click', function (e) {
+            e.preventDefault();
+
+            if ($('.row-active').length > 0) {
+                selectedVolunteerId = $('.row-active')[0].dataset.volunteerId;
+                console.log(selectedVolunteerId);
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Transactions/Create/' + selectedVolunteerId,
+                    success: function (result) {
+                        $("#partial-content").html(result);
+                    }
+                });
+            }
+        });
+    });
+</script>

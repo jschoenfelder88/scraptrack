@@ -3,21 +3,58 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Volunteer Details</h1>
-<hr />
-
-<div id="volunteerDetails">
-    @Html.Partial("~/Views/Volunteers/_DetailVolunteer.cshtml", Model)
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 class="pagetitle">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h1>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-md-8">
+            <div class="tabs">
+                <button class="tablinks active">Donations</button>
+            </div>
+            <div class="tabcontent-container">
+                <div id="transactions" class="tabcontent active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <h4>Recent Donations to @Model.FirstName</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input class="form-control search-box" type="text" id="tranactionsNameInput" placeholder="Search" title="Type in a search term">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <btn class="btn btn-primary mmodal-btn btnAddTransaction">Give Items</btn>
+                                    </div>
+                                </div>
+                                <div id="partial-transactions-list">
+                                    @{ await Html.RenderPartialAsync("~/Views/Transactions/_ListTransactions.cshtml", Model.Transactions); }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <h5>Quick Actions</h5>
+            <div class="container quickaction">
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnGiveItems" asp-action="Create" asp-controller="Transactions" asp-route-id="@Model.Id">Give Items</btn>
+                </div>
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit Profile</btn>
+                </div>
+                <div class="row">
+                    <btn class="btn btn-outline-secondary mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete Profile</btn>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<hr />
-<div>
-    <a class="btn btn-primary mmodal-btn quickaction-link btnEditVolunteer" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <a class="btn btn-danger mmodal-btn quickaction-link btnDeleteVolunteer" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-    <a class="btn btn-success mmodal-btn quickaction-link">Give Items</a>
-</div>
 
-@Html.Partial("~/Views/Shared/_Modal.cshtml")
+@{ await Html.RenderPartialAsync("~/Views/Shared/_Modal.cshtml"); }
 
 <script>
     $(document).ready(function () {
@@ -32,31 +69,22 @@
             });
         });
 
-        $('#partial-content').on('click', '#submitEditedVolunteer', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Edit", "Volunteers", new { id = Model.Id })',
-                data: $('form').serialize(),
-                success: function (result) {
-                    $("#partial-content").html(result);
-
-                    $.ajax({
-                        type: 'GET',
-                        url: '@Url.Action("DetailsPartial", "Volunteers", new { id = Model.Id })',
-                        success: function (result) {
-                            $('#volunteerDetails').html(result);
-                        }
-                    });
-                }
-            });
-        });
-
         $('.btnDeleteVolunteer').on('click', function (e) {
             e.preventDefault();
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("Delete", "Volunteers", new { id = Model.Id })',
+                success: function (result) {
+                    $("#partial-content").html(result);
+                }
+            });
+        });
+
+        $('.btnGiveItems').on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Create", "Transactions", new { id = Model.Id })',
                 success: function (result) {
                     $("#partial-content").html(result);
                 }

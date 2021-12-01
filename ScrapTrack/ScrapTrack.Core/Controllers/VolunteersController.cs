@@ -14,9 +14,9 @@ namespace ScrapTrack.Core.Controllers
     [Authorize]
     public class VolunteersController : Controller
     {
-        private readonly AppDataDbContext _context;
+        private readonly DataDbContext _context;
 
-        public VolunteersController(AppDataDbContext context)
+        public VolunteersController(DataDbContext context)
         {
             _context = context;
         }
@@ -35,7 +35,7 @@ namespace ScrapTrack.Core.Controllers
                 return NotFound();
             }
 
-            var volunteer = await _context.Volunteers
+            var volunteer = await _context.Volunteers.Include(m => m.Transactions).ThenInclude(t => t.ApplicationUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (volunteer == null)
             {
@@ -130,7 +130,7 @@ namespace ScrapTrack.Core.Controllers
                         throw;
                     }
                 }
-                return PartialView("~/Views/Shared/_Success.cshtml");
+                return RedirectToAction("Details", "Volunteers", new { id = volunteer.Id} );
             }
             return PartialView("~/Views/Volunteers/_EditVolunteer.cshtml", volunteer);
         }

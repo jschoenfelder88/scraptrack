@@ -8,28 +8,28 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th>
+                <th >
                     @Html.DisplayNameFor(model => model.Weight)
+                </th>
+                <th class="last-header">
+                    @Html.DisplayNameFor(model => model.Category)
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr data-item-id="@item.Id">
                     <td>
                         <a asp-controller="Items" asp-action="Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.Description)
                         </a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Category.Description)
+                        @Html.DisplayFor(modelItem => item.Weight)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Weight)
+                        @Html.DisplayFor(modelItem => item.Category.Description)
                     </td>
                 </tr>
             }

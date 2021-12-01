@@ -1,0 +1,226 @@
+﻿@model ScrapTrack.Core.Models.TransactionViewModel
+
+<style>
+    #available-items {
+        margin-left: 1rem;
+    }
+    #available-items h5 {
+        margin-top: 0;
+    }
+    #available-items .dt-vertical-scroll {
+        max-height: 261px;
+    }
+
+    #available-items .dt-vertical-scroll .table thead th{
+        font-size: .85rem;
+    }
+
+    #available-items .dt-vertical-scroll .table tbody td{
+        font-size: .8rem
+    }
+    #available-items .table tbody tr:hover {
+        cursor:pointer;
+        background-color: #D5E9FC;
+    }
+
+    #available-items .table tbody .row-active,
+    #available-items .table tbody .row-active:hover {
+        background-color: #ACE0AF;
+    }
+
+    #mmodal-subtitle {
+        padding-bottom: 0;
+    }
+
+    .selectedItems {
+        height: 100%;
+        background-color: #FFF;
+        border: 1px solid #dee2e6;
+        margin-top: 0;
+        border-top: 0;
+    }
+
+    .selectedItems .table {
+        border: 0;
+    }
+
+    #selectedItemsTable tr th {
+        font-size: .8rem;
+        font-weight: 600;
+        color: #B4BBC3;
+        width: 30%;
+        border-top: 1px solid #dee2e6;
+        border-right: 1px solid #dee2e6;
+    }
+
+    #selectedItemsTable .tableheader {
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    #selectedItemsTable .tableheader:hover {
+        background-color: #FFF;
+    }
+
+    #selectedItemsTable tr td {
+        border: 0;
+        width: 50%;
+    }
+    .removeSelectedItem {
+        color: #F26D70;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .removeSelectedItem:hover {
+        cursor: pointer;
+    }
+    .removeTD {
+        width: 10%;
+    }
+
+    #itemTable td,
+    #itemTable td a{
+        color: #000;
+        font-weight: 500;
+    }
+    #itemTable .row-active td,
+    #itemTable .row-active td a {
+        color: #23272C;
+        font-weight: 600;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h3>Select Items for @Model.volunteer.FirstName @Model.volunteer.LastName</h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div id="available-items">
+                    <div class="row">
+                        <h5 class="mmodal-subtitle">Available Items </h5>
+                    </div>
+                    <div class="row">
+                        <input class="form-control search-box" type="text" id="descriptionInput" placeholder="Search" title="Type in a search term">
+                    </div>
+                    <div id="availableItemsContainer" class="row">
+                        @{ await Html.RenderPartialAsync("~/Views/Items/_ListItems.cshtml", Model.items); }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="selectedItems dt-vertical-scroll">
+                    <table class="table" id="selectedItemsTable">
+                        <thead>
+                            <tr class="tableheader">
+                                <th>Item</th>
+                                <th>Weight (lbs)</th>
+                                <th class="last-header">Quantity</th>
+                                <th class="last-header"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <btn class="btn btn-primary mmodal-btn btnSubmitTransaction">Save</btn>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#descriptionInput').on('keyup', function () {
+            input = document.getElementById("descriptionInput");
+            filter = input.value.toUpperCase();
+            console.log(filter)
+            table = document.getElementById("itemTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                description = tr[i].getElementsByTagName("td")[0].innerText.toUpperCase();
+
+                if (description !== undefined) {
+                    if (description.indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        });
+
+        $('#available-items .table tbody tr').on('click', function (e) {
+            e.preventDefault();
+            targetParent = e.target.parentElement
+
+            if (targetParent.tagName == 'TR') {
+                if (targetParent.className.indexOf("row-active") > -1) {
+                    // Run if clicking on item that has been selected
+                    itemId = e.target.parentElement.dataset.itemId;
+
+                    targetParent.className = targetParent.className.replace(' row-active', '');
+                    $('#selectedItemsTable tr[data-selecteditem-id="' + itemId + '"]').remove();
+                } else {
+                    // Run if clicking on item that hasn't been selected
+                    itemName = e.target.parentElement.firstElementChild.textContent.trim();
+                    itemWeight = e.target.parentElement.children[1].textContent.trim();
+                    itemId = e.target.parentElement.dataset.itemId;
+
+                    dropdownOptions = "<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>"
+
+                    deleteXTD = '<td class="text-center removeTD"><span class="removeSelectedItem">&times;</span></td>'
+                    quantityDropdown = '<select class="form-control form-control-sm">' + dropdownOptions + '</select>'
+                    newDescriptionTD = '<td class="align-middle">' + itemName + '</td>';
+                    newWeightTD = '<td class="align-middle">' + itemWeight + '</td>';
+                    newQuantityTD = '<td>' + quantityDropdown + '</td>';
+
+                    newRow = '<tr class="selectedItemRow" data-selecteditem-id="' + itemId + '">' + newDescriptionTD + newWeightTD + newQuantityTD + deleteXTD + '</tr >';
+
+                    e.target.parentElement.className += " row-active";
+                    $("#selectedItemsTable tbody:last-child")
+                        .append(newRow);
+                }
+            }
+        });
+
+        $('#selectedItemsTable').on('click', '.removeSelectedItem', function (e) {
+            e.preventDefault()
+            selectedItemRow = e.target.parentElement.parentElement;
+            selectedItemId = selectedItemRow.dataset.selecteditemId;
+
+            // Remove row
+            $('#selectedItemsTable tr[data-selecteditem-id="' + selectedItemId + '"]').remove();
+
+            // Change backgroung color of the same item in the available items list
+            itemFromAvailableItems = $('#availableItemsContainer #itemTable tr[data-item-id="' + selectedItemId + '"]')[0];
+            itemFromAvailableItems.className = itemFromAvailableItems.className.replace(' row-active', '');
+        });
+
+        $('.btnSubmitTransaction').on('click', function (e) {
+            transactionItems = [];
+            selectedItems = $("#selectedItemsTable tbody tr");
+
+            for (i = 0; i < selectedItems.length; i++) {
+                transactionItems.push({
+                    ItemId: parseInt(selectedItems[i].dataset.selecteditemId),
+                    Quantity: parseInt(selectedItems[i].children[2].children[0].value)
+                });
+
+            }
+
+            $.ajax({
+                url: "@Url.Action("Create", "Transactions", new { id = Model.volunteer.Id}) ",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(transactionItems),
+                success: function (result) {
+                        $("#partial-content").html(result);
+                    }
+                });
+        });
+    });
+</script>

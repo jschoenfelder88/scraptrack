@@ -14,9 +14,9 @@ namespace ScrapTrack.Core.Controllers
     [Authorize]
     public class ItemsController : Controller
     {
-        private readonly AppDataDbContext _context;
+        private readonly DataDbContext _context;
 
-        public ItemsController(AppDataDbContext context)
+        public ItemsController(DataDbContext context)
         {
             _context = context;
         }
@@ -135,7 +135,7 @@ namespace ScrapTrack.Core.Controllers
                         throw;
                     }
                 }
-                return PartialView("~/Views/Shared/_Success.cshtml");
+                return RedirectToAction("Details", "Items", new { id = item.Id });
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", item.CategoryId);
             return PartialView("~/Views/Items/_EditItem.cshtml", item);

@@ -5,84 +5,42 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .tabs {
-        overflow: hidden;
-        border: 1px solid #ccc;
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-        background-color: #585858;
-    }
-
-        .tabs button {
-            background-color: inherit;
-            color: #FFF;
-            font-weight: 600;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-        }
-
-    .tabcontent {
-        display: none;
-        min-height: 200px;
-        padding-bottom: 2rem;
-        border: 1px solid #ccc;
-        border-bottom-left-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-        border-top: none;
-    }
-
-    .tablinks.active {
-        color: #76D9FF;
-    }
-
-    .tabcontent.active {
-        display: block;
-    }
-    .mmodal-btn {
-        float: right;
-        width: 9rem;
-    }
-
-    .mmodal-partialview {
-        display: none;
-    }
-    .quickaction-link {
-        float: left;
-        margin-bottom: .5rem;
-    }
-</style>
-
 <div class="container">
+    <div class="row justify-content-center">
+        <h1 class="pagetitle">Administration</h1>
+    </div>
     <div class="row">
-        <div class="col-md-3">
-            <h3>Administration</h3>
-            <hr />
-            <div class="container quickaction">
-                <div class="row">
-                    <btn id="createReport" class="btn btn-success mmodal-btn quickaction-link">New Report</btn>
-                    <btn id="createUser" class="btn btn-success mmodal-btn quickaction-link">New User</btn>
-                </div>
-            </div>
+        <div class="col-md-2">
+
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="tabs">
                 <button class="tablinks active">Reports</button>
                 <button class="tablinks">Users</button>
             </div>
             <div class="tabcontent-container">
                 <div id="reports" class="tabcontent active">
-                    <!--Reports Export Button-->
-                    <div align="center">
-                        <a href="Home/ExporttoExcel">Export Report to Excel</a>
+                    <div class="row">
+                        <!--Reports Export Button-->
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <h1>Reports</h1>
+                            <a class="btn btn-primary" asp-controller="Home" asp-action="ExporttoExcel">Export Report to Excel</a>
+                        </div>
                     </div>
                 </div>
                 <div id="users" class="tabcontent">
-                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <h5>Quick Actions</h5>
+            <div class="container quickaction">
+                <div class="row">
+                    <btn id="createReport" class="btn btn-outline-secondary mmodal-btn quickaction-link">New Report</btn>
+                </div>
+                <div class="row">
+                    <btn id="createUser" class="btn btn-outline-secondary mmodal-btn quickaction-link">New User</btn>
                 </div>
             </div>
         </div>
@@ -90,14 +48,11 @@
 </div>
 
 
-
 <div class="mmodal">
     <div class="mmodal-content">
         <span class="close">&times;</span>
-        <h4>Create a New User</h4>
-        <hr />
         <div id="partial-content">
-            @Html.Partial("~/Views/Account/_Register.cshtml")
+            @{ await Html.RenderPartialAsync("~/Views/Account/_Register.cshtml"); }
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace ScrapTrack.Core.Models
         }
         public DataSet Getrecord()
         {
-            SqlCommand com = new SqlCommand("Sp_Volunteer", con);
+            SqlCommand com = new SqlCommand("Sp_Reports", con);
             com.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter da = new SqlDataAdapter(com);
             DataSet ds = new DataSet();

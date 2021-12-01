@@ -4,19 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Item Details</h1>
-<hr />
-
-<div id="itemDetails">
-    @Html.Partial("~/Views/Items/_DetailItem.cshtml", Model)
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Item Details</h3>
+            <hr />
+            <div id="itemDetails">
+                @{ await Html.RenderPartialAsync("~/Views/Items/_DetailItem.cshtml", Model); }
+            </div>
+            <hr />
+            <div>
+                <a class="btn btn-outline-secondary mmodal-btn quickaction-link btnEditItem" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <a class="btn btn-outline-secondary mmodal-btn quickaction-link btnDeleteItem" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
 </div>
-<hr />
-<div>
-    <a class="btn btn-primary mmodal-btn quickaction-link btnEditItem" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <a class="btn btn-danger mmodal-btn quickaction-link btnDeleteItem" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-</div>
 
-@Html.Partial("~/Views/Shared/_Modal.cshtml")
+@{ await Html.RenderPartialAsync("~/Views/Shared/_Modal.cshtml"); }
 
 <script>
     $(document).ready(function () {
@@ -27,27 +33,6 @@
                 url: '@Url.Action("Edit", "Items", new { id = Model.Id })',
                 success: function (result) {
                     $("#partial-content").html(result);
-                }
-            });
-        });
-
-        $('#partial-content').on('click', '#submitEditedItem', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Edit", "Items", new { id = Model.Id })',
-                data: $('form').serialize(),
-                success: function (result) {
-                    $("#partial-content").html(result);
-
-                    $.ajax({
-                        type: 'GET',
-                        url: '@Url.Action("DetailsPartial", "Items", new { id = Model.Id })',
-                        success: function (result) {
-                            console.log(result);
-                            $('#itemDetails').html(result);
-                        }
-                    });
                 }
             });
         });

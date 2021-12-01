@@ -28,17 +28,13 @@ namespace ScrapTrack.Core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDataDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("Default"));
-            });
-            services.AddDbContext<AuthorizationDbContext>(options =>
+            services.AddDbContext<DataDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<AuthorizationDbContext>();
+                .AddEntityFrameworkStores<DataDbContext>();
 
             services.Configure<IdentityOptions>(options =>
             {

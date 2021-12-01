@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrapTrack.Core", "ScrapTrack.Core\ScrapTrack.Core.csproj", "{1B083FE4-D889-41DE-A8BF-E5D13A8ABA61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrapTrack.Data", "ScrapTrack.Data\ScrapTrack.Data.csproj", "{87993A45-0629-4E69-B3E6-604344450818}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrapTrack.Data", "ScrapTrack.Data\ScrapTrack.Data.csproj", "{87993A45-0629-4E69-B3E6-604344450818}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D6C95099-5FDB-4B38-A971-3E7AECFE1C63}"
+	ProjectSection(SolutionItems) = preProject
+		ProcCreate.sql = ProcCreate.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

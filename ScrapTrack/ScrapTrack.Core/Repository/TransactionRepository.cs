@@ -7,5 +7,9 @@ namespace ScrapTrack.Core.Repository
 {
     public class TransactionRepository
     {
+        public TransactionRepository()
+        {
+
+        }
     }
 }

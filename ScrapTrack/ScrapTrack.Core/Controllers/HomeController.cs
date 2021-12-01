@@ -27,8 +27,8 @@ namespace ScrapTrack.Core.Controllers
 
         private readonly ILogger<HomeController> _logger;
 
-        private readonly AppDataDbContext _context;
-        public HomeController(ILogger<HomeController> logger, AppDataDbContext context)
+        private readonly DataDbContext _context;
+        public HomeController(ILogger<HomeController> logger, DataDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -39,7 +39,7 @@ namespace ScrapTrack.Core.Controllers
             DataSet ds = dbop.Getrecord();
             var dashboardModel = new DashboardViewModel()
             {
-                TransactionList = _context.Transactions.ToList(),
+                TransactionList = _context.Transactions.Include(t => t.Volunteer ).Include(t => t.ApplicationUser).ToList(),
                 ItemList = _context.Items.Include(a => a.Category).ToList(),
                 VolunteerList = _context.Volunteers.ToList(),
                 CategoryId = new SelectList(_context.Categories, "Id", "Description")

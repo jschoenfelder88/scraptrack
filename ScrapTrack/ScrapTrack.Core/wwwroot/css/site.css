@@ -2,10 +2,10 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 .navbar {
-    padding: .2rem;
+    padding: 0;
 }
 a.navbar-brand img {
-    height: 45px;
+    height: 35px;
 }
 /* Provide sufficient contrast against white background */
 a {
@@ -40,6 +40,9 @@ html {
   }
 }
 
+body {
+    background-color: #F2F5F8;
+}
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
@@ -79,11 +82,12 @@ body {
 -------------------------------------------------- */
 
 .dt-vertical-scroll {
-    margin: 20px 20px 0 0;
-    max-height: 350px;
+    margin-top: 1rem;
+    height: 350px;
     width: 100%;
     overflow: auto;
-    border-bottom: 1px solid #dee2e6;
+    border: 1px solid #dee2e6;
+    background-color: #FFF;
 }
 
 .dt-vertical-scroll .table thead {
@@ -95,18 +99,20 @@ body {
 .dt-vertical-scroll .table {
     border-collapse: separate;
     border-spacing: 0;
-    border-left: 1px solid #dee2e6;
-    border-right: 1px solid #dee2e6;
     margin: 0;
 }
 
 .dt-vertical-scroll .table thead th {
-    border-top: 1px solid #dee2e6;
+    border-top: 0;
     border-right: 1px solid #dee2e6;
     border-bottom: 1px solid #dee2e6;
+    font-size: .8rem;
+    font-weight: 600;
+    color: #B4BBC3; 
 }
 .dt-vertical-scroll .table tbody td {
     border: 0;
+    font-size: .85rem;
 }
 
 .table-checkbox-column {
@@ -114,8 +120,12 @@ body {
     width: 50px;
 }
 
+.table td, .table th {
+    padding: .5rem;
+}
+
 .table tbody tr:hover {
-    background-color: #E8E9E9;
+    background-color: #F2F5F8;
 }
 
 .table tbody td a {
@@ -140,9 +150,9 @@ body {
 }
 
 .mmodal-content {
-    background-color: #FFF;
+    background-color: #FCFCFC;
     margin: auto;
-    width: 800px;
+    width: 1000px;
     padding: 20px;
     border-radius: 5px;
 }
@@ -165,14 +175,56 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+/* Tabs styles
+-------------------------------------------------- */
+.tabs {
+    margin-top: .75rem;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-top-left-radius: .2rem;
+    border-top-right-radius: .2rem;
+    background-color: #313D4E;
+}
+
+.tabs button {
+    background-color: inherit;
+    color: #919BA4;
+    font-weight: 500;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 16px;
+    transition: 0.3s;
+}
+
+.tabcontent {
+    display: none;
+    height: 500px;
+    padding-bottom: 15px;
+    border: 1px solid #ccc;
+    border-bottom-left-radius: .2rem;
+    border-bottom-right-radius: .2rem;
+    border-top: none;
+}
+
+.tabcontent-container {
+    background-color: #FCFCFC;
+}
+
+.tablinks.active {
+    color: #FFF;
+    background-color: #788594;
+}
+
+.tabcontent.active {
+    display: block;
+}
+
 /* Other styles
 -------------------------------------------------- */
 .search-box {
     width: 15rem;
-}
-
-h1 {
-    margin: 1.5rem 0;
 }
 
 .login {
@@ -183,4 +235,50 @@ h1 {
     float: left;
     margin-bottom: .5rem;
     margin-right: .5rem;
+}
+
+.pagetitle {
+    font-weight: 600;
+    margin: .1rem 0 .3rem 0;
+}
+
+/* Overrided Styles
+-------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    margin: 1rem 0;
+    color: #444444;
+}
+
+.btn {
+    border-radius: .15rem;
+}
+.btn-outline-secondary {
+    background-color: #FFF;
+    border-color: #C5CEDC;
+    color: #666;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:active {
+    background-color: inherit !important;
+    color: #666 !important;
+    border-color: #C5CEDC !important;
+}
+
+.last-header {
+    border-right: 0 !important;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.form-group select,
+.form-group input[type='text'],
+.form-group input[type='password'] {
+    width: 250px
+}
+
+.form-group .center-btn {
+    width: 9rem;
 }
