@@ -19,9 +19,17 @@
                 <button class="tablinks">Users</button>
             </div>
             <div class="tabcontent-container">
-                <div id="transactions" class="tabcontent active">
+                <div id="reports" class="tabcontent active">
+                    <div class="row">
+                        <!--Reports Export Button-->
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <h1>Reports</h1>
+                            <a class="btn btn-primary" asp-controller="Home" asp-action="ExporttoExcel">Export Report to Excel</a>
+                        </div>
+                    </div>
                 </div>
-                <div id="transactions" class="tabcontent">
+                <div id="users" class="tabcontent">
                 </div>
             </div>
         </div>
