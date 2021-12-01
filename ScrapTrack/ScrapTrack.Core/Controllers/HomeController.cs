@@ -19,7 +19,7 @@ using OfficeOpenXml;
 
 namespace ScrapTrack.Core.Controllers
 {
-    [Authorize]
+    [Authorize]    
     public class HomeController : Controller
     {
         //database object
